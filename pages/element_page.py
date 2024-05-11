@@ -1,7 +1,7 @@
 import time
 
 from generator.generator import generate_person
-from locators.elements_page_locators import TextBoxLocators
+from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators
 from pages.base_page import BasePage
 
 
@@ -33,3 +33,7 @@ class TextBoxPage(BasePage):  # TextBox page, inheriting from BasePage
         current_address = self.element_is_present(self.locators.CREATED_CURRENT_ADDRESS).text.split(':')[1]
         permanent_address = self.element_is_present(self.locators.CREATED_PERMANENT_ADDRESS).text.split(':')[1]
         return full_name, email, current_address, permanent_address
+
+
+class CheckBoxPage(BasePage):  # CheckBox page, inheriting from BasePage
+    locators = CheckBoxLocators  # Setting locators attribute to CheckLocators class for element locators
