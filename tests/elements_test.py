@@ -29,3 +29,11 @@ class TestElements:
             checkbox_page = CheckBoxPage(driver, "https://demoqa.com/checkbox")
             # Opening the URL in the browser
             checkbox_page.open()
+
+            # Toggle all items
+            checkbox_page.open_full_list()
+            checkbox_page.click_random_checkbox()
+            input_checkboxes = checkbox_page.get_checked_checkboxes()
+            output_result = checkbox_page.get_output_result()
+            # Assert result
+            assert input_checkboxes == output_result, "the checkboxes have not been selected"
