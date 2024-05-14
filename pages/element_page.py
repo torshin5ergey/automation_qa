@@ -4,11 +4,11 @@ import time
 from selenium.webdriver.common.by import By
 
 from generator.generator import generate_person
-from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators
+from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators
 from pages.base_page import BasePage
 
 
-class TextBoxPage(BasePage):  # TextBox page, inheriting from BasePage
+class TextBoxPage(BasePage):  # TextBoxPage, inheriting from BasePage
     locators = TextBoxLocators  # Setting locators attribute to TextBoxLocators class for element locators
 
     def fill_all_fields(self):
@@ -20,7 +20,7 @@ class TextBoxPage(BasePage):  # TextBox page, inheriting from BasePage
         email = person_info.email
         current_address = person_info.current_address
         permanent_address = person_info.permanent_address
-        self.element_is_visible(self.locators.FULL_NAME,).send_keys(full_name)
+        self.element_is_visible(self.locators.FULL_NAME, ).send_keys(full_name)
         self.element_is_visible(self.locators.EMAIL).send_keys(email)
         self.element_is_visible(self.locators.CURRENT_ADDRESS).send_keys(current_address)
         self.element_is_visible(self.locators.PERMANENT_ADDRESS).send_keys(permanent_address)
@@ -38,8 +38,8 @@ class TextBoxPage(BasePage):  # TextBox page, inheriting from BasePage
         return full_name, email, current_address, permanent_address
 
 
-class CheckBoxPage(BasePage):  # CheckBox page, inheriting from BasePage
-    locators = CheckBoxLocators  # Setting locators attribute to CheckLocators class for element locators
+class CheckBoxPage(BasePage):  # CheckBoxPage, inheriting from BasePage
+    locators = CheckBoxLocators  # Setting locators attribute to CheckBoxLocators class for element locators
 
     def open_full_list(self):
         """
@@ -84,3 +84,18 @@ class CheckBoxPage(BasePage):  # CheckBox page, inheriting from BasePage
         for item in result_list:
             data.append(item.text)
         return str(data).lower().replace(' ', '')
+
+
+class RadioButtonPage(BasePage):
+    # RadioButtonPage, inheriting from BasePage
+    locators = RadioButtonLocators()  # Setting locators attribute to RadioButtonLocators class for element locators
+
+    def click_radio(self, choice):
+        choices = {'yes': self.locators.RADIO_YES,
+                   'impressive': self.locators.RADIO_IMPRESSIVE,
+                   'no': self.locators.RADIO_NO}
+        # Click random radio
+        self.element_is_visible(choices[choice]).click()
+
+    def get_output_result(self):
+        return self.element_is_present(self.locators.OUTPUT_RESULT).text

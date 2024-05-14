@@ -1,7 +1,7 @@
 import time
 
 from pages.base_page import BasePage
-from pages.element_page import TextBoxPage, CheckBoxPage
+from pages.element_page import TextBoxPage, CheckBoxPage, RadioButtonPage
 from conftest import driver  # Importing the WebDriver instance as a fixture
 
 
@@ -18,14 +18,14 @@ class TestElements:
             # Check filled data
             output_full_name, output_email, output_cur_address, output_perm_address = textbox_page.check_filled_form()
             # Assert all fields
-            assert full_name == output_full_name, "the fullname does not match"
-            assert email == output_email, "the email does not match"
-            assert current_address == output_cur_address, "the current address does not match"
-            assert permanent_address == output_perm_address, "the permanent address does not match"
+            assert full_name == output_full_name, "The fullname does not match"
+            assert email == output_email, "The email does not match"
+            assert current_address == output_cur_address, "The current address does not match"
+            assert permanent_address == output_perm_address, "The permanent address does not match"
 
     class TestCheckBox:  # CheckBoxPage functionality
         def test_checkbox(self, driver):
-            # Creating an instance of the CheckPage class with the WebDriver instance and checkbox URL
+            # Creating an instance of the CheckBoxPage class with the WebDriver instance and checkbox URL
             checkbox_page = CheckBoxPage(driver, "https://demoqa.com/checkbox")
             # Opening the URL in the browser
             checkbox_page.open()
@@ -36,4 +36,22 @@ class TestElements:
             input_checkboxes = checkbox_page.get_checked_checkboxes()
             output_result = checkbox_page.get_output_result()
             # Assert result
-            assert input_checkboxes == output_result, "the checkboxes have not been selected"
+            assert input_checkboxes == output_result, "The checkboxes have not been selected"
+
+    class TestRadioButton:  # RadioButton Page functionality
+        def test_radiobutton(self, driver):
+            # Creating an instance of the RadioButtonPage class with the WebDriver instance and checkbox URL
+            radiobutton_page = RadioButtonPage(driver, "https://demoqa.com/radio-button")
+            # Opening the URL in the browser
+            radiobutton_page.open()
+            radiobutton_page.click_radio('yes')
+            output_yes = radiobutton_page.get_output_result()
+            radiobutton_page.click_radio('impressive')
+            output_impressive = radiobutton_page.get_output_result()
+            radiobutton_page.click_radio('no')
+            output_no = radiobutton_page.get_output_result()
+            # Assert results
+            assert output_yes == 'Yes', "'Yes' have not been selected"
+            assert output_impressive == 'Impressive', "'Impressive' have not been selected"
+            assert output_no == 'No', "'No' have not been selected"
+

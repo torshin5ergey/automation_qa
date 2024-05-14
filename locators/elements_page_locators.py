@@ -24,3 +24,9 @@ class CheckBoxLocators:  # Class to hold locator constants for the CheckBox page
     ITEM_TITLE = (By.XPATH, ".//ancestor::span[@class='rct-text']")
     OUTPUT_RESULT = (By.CSS_SELECTOR, "span[class='text-success']")
 
+
+class RadioButtonLocators:  # Class to hold locators constants for the RadioButton page
+    RADIO_YES = (By.CSS_SELECTOR, "label[class^='custom-control'][for='yesRadio']")
+    RADIO_IMPRESSIVE = (By.CSS_SELECTOR, "label[class^='custom-control'][for='impressiveRadio']")
+    RADIO_NO = (By.CSS_SELECTOR, "label[class^='custom-control'][for='noRadio']")
+    OUTPUT_RESULT = (By.CSS_SELECTOR, "p span[class='text-success']")
