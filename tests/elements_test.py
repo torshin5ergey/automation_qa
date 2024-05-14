@@ -1,7 +1,7 @@
 import time
 
 from pages.base_page import BasePage
-from pages.element_page import TextBoxPage, CheckBoxPage, RadioButtonPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage
 from conftest import driver  # Importing the WebDriver instance as a fixture
 
 
