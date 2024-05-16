@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By  # By class for locating elements
 
 
-class TextBoxLocators:  # Class to hold locator constants for the TextBox page
+class TextBoxLocators:  # Locator constants for the TextBox page
     # Form fields to be filled in
     FULL_NAME = (By.CSS_SELECTOR, "input[id='userName']")
     EMAIL = (By.CSS_SELECTOR, "input[id='userEmail']")
@@ -15,7 +15,7 @@ class TextBoxLocators:  # Class to hold locator constants for the TextBox page
     OUTPUT_PERMANENT_ADDRESS = (By.CSS_SELECTOR, "#output #permanentAddress")
 
 
-class CheckBoxLocators:  # Class to hold locator constants for the CheckBox page
+class CheckBoxLocators:  # Locator constants for the CheckBox page
     # Form fields to be filled in
     EXPAND_ALL_BUTTON = (By.CSS_SELECTOR, "button[title='Expand all']")
     ITEM_LIST = (By.CSS_SELECTOR, "span[class='rct-title']")
@@ -25,8 +25,25 @@ class CheckBoxLocators:  # Class to hold locator constants for the CheckBox page
     OUTPUT_RESULT = (By.CSS_SELECTOR, "span[class='text-success']")
 
 
-class RadioButtonLocators:  # Class to hold locators constants for the RadioButton page
+class RadioButtonLocators:  # Locators constants for the RadioButton page
     RADIO_YES = (By.CSS_SELECTOR, "label[class^='custom-control'][for='yesRadio']")
     RADIO_IMPRESSIVE = (By.CSS_SELECTOR, "label[class^='custom-control'][for='impressiveRadio']")
     RADIO_NO = (By.CSS_SELECTOR, "label[class^='custom-control'][for='noRadio']")
     OUTPUT_RESULT = (By.CSS_SELECTOR, "p span[class='text-success']")
+
+
+class WebTableLocators:  # Locators constants for the WebTable page
+    # Add person form
+    ADD_BUTTON = (By.CSS_SELECTOR, "button[id='addNewRecordButton']")
+    FIRST_NAME_INPUT = (By.CSS_SELECTOR, "input[id='firstName']")
+    LAST_NAME_INPUT = (By.CSS_SELECTOR, "input[id='lastName']")
+    EMAIL_INPUT = (By.CSS_SELECTOR, "input[id='userEmail']")
+    AGE_INPUT = (By.CSS_SELECTOR, "input[id='age']")
+    SALARY_INPUT = (By.CSS_SELECTOR, "input[id='salary']")
+    DEPARTMENT_INPUT = (By.CSS_SELECTOR, "input[id='department']")
+    SUBMIT_BUTTON = (By.CSS_SELECTOR, "button[id='submit']")
+    # Table
+    FULL_PERSONS_LIST = (By.CSS_SELECTOR, "div[class='rt-tr-group']")
+    SEARCH_INPUT = (By.CSS_SELECTOR, "input[id='searchBox']")
+    DELETE_BUTTON = (By.CSS_SELECTOR, "span[title='Delete']")
+    PARENT_ROW = (By.XPATH, ".//ancestor::div[@class='rt-tr-group']")

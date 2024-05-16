@@ -1,7 +1,8 @@
+import random
 import time
 
 from pages.base_page import BasePage
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
 from conftest import driver  # Importing the WebDriver instance as a fixture
 
 
@@ -51,7 +52,27 @@ class TestElements:
             radiobutton_page.click_radio('no')
             output_no = radiobutton_page.get_output_result()
             # Assert results
-            assert output_yes == 'Yes', "'Yes' have not been selected"
-            assert output_impressive == 'Impressive', "'Impressive' have not been selected"
-            assert output_no == 'No', "'No' have not been selected"
+            assert output_yes == 'yes', "'Yes' have not been selected"
+            assert output_impressive == 'impressive', "'Impressive' have not been selected"
+            assert output_no == 'no', "'No' have not been selected"
+
+    class TestWebTable:  # WebTable Page functionality
+        def test_webtable_add_person(self, driver):
+            # Creating an instance of the WebTablePage class with the WebDriver instance and checkbox URL
+            webtable_page = WebTablePage(driver, "https://demoqa.com/webtables")
+            # Opening the URL in the browser
+            webtable_page.open()
+            new_person = webtable_page.add_new_person()
+            table_result = webtable_page.check_added_person()
+            assert new_person in table_result, "The person was not added in the table"
+
+        def test_webtable_search_person(self, driver):
+            # Creating an instance of the WebTablePage class with the WebDriver instance and checkbox URL
+            webtable_page = WebTablePage(driver, "https://demoqa.com/webtables")
+            # Opening the URL in the browser
+            webtable_page.open()
+            new_person_keyword = webtable_page.add_new_person()[random.randint(0, 5)]
+            webtable_page.search_person(new_person_keyword)
+            table_result = webtable_page.check_search_person()
+            assert new_person_keyword in table_result, "The person was not found in the table."
 
