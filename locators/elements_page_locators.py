@@ -47,3 +47,7 @@ class WebTableLocators:  # Locators constants for the WebTable page
     SEARCH_INPUT = (By.CSS_SELECTOR, "input[id='searchBox']")
     DELETE_BUTTON = (By.CSS_SELECTOR, "span[title='Delete']")
     PARENT_ROW = (By.XPATH, ".//ancestor::div[@class='rt-tr-group']")
+    NO_ROWS_FOUND_LABEL = (By.CSS_SELECTOR, "div[class='rt-noData']")
+    ROWS_PER_PAGE_SELECT = (By.CSS_SELECTOR, "select[aria-label='rows per page']")
+    # Edit person form
+    UPDATE_BUTTON = (By.CSS_SELECTOR, "span[title='Edit']")

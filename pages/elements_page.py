@@ -144,6 +144,7 @@ class WebTablePage(BasePage):
         :rtype: list
         """
         while count != 0:
+            # Generating new person data
             person_info = next(generate_person())
             first_name = person_info.first_name
             last_name = person_info.last_name
@@ -151,6 +152,7 @@ class WebTablePage(BasePage):
             age = person_info.age
             salary = person_info.salary
             department = person_info.department
+            # Filling fields
             self.element_is_visible(self.locators.ADD_BUTTON).click()
             self.element_is_visible(self.locators.FIRST_NAME_INPUT).send_keys(first_name)
             self.element_is_visible(self.locators.LAST_NAME_INPUT).send_keys(last_name)
@@ -180,11 +182,81 @@ class WebTablePage(BasePage):
         Search person with keyword.
 
         :param keyword:
-        :return:
+        :type keyword: str
         """
         self.element_is_visible(self.locators.SEARCH_INPUT).send_keys(keyword)
 
     def check_search_person(self):
+        """
+        Check and retrieve data about a person in a table row.
+
+        :return: A list with person's data from the table row
+        :rtype: list
+        """
+        # Finding person data with DELETE_BUTTON parent element by XPATH
         delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
         parent_row = delete_button.find_element(*self.locators.PARENT_ROW)
         return parent_row.text.splitlines()
+
+    def edit_person_info(self):
+        """
+        Edit person age data
+
+        :return: Edited data (age)
+        :rtype: str
+        """
+        # TODO: edit random data
+        # Generating new person age data
+        person_info = next(generate_person())
+        age = person_info.age
+        self.element_is_visible(self.locators.UPDATE_BUTTON).click()
+        self.element_is_visible(self.locators.AGE_INPUT).clear()
+        self.element_is_visible(self.locators.AGE_INPUT).send_keys(age)
+        self.element_is_visible(self.locators.SUBMIT_BUTTON).click()
+        return str(age)
+
+    def delete_person(self):
+        """
+        Delete a person's entry from the table.
+        """
+        self.element_is_visible(self.locators.DELETE_BUTTON).click()
+
+    def check_deleted_person(self):
+        """
+        check and retrieve the deletion of a person's entry from the table.
+
+        :return: Text of the label indicating no rows are found.
+        :rtype str
+        """
+        return self.element_is_present(self.locators.NO_ROWS_FOUND_LABEL).text
+
+    def change_displayed_rows_count(self):
+        """
+        Change the number of rows displayed per page and retrieve the row count for each setting.
+
+        :return: A list of actual row counts displayed for each setting.
+        :rtype: list
+        """
+        count = [5, 10, 20, 25, 50, 100]
+        data = []
+        for i in count:
+            # Locate and scroll to the rows per page dropdown button
+            rows_per_page_button = self.element_is_visible(self.locators.ROWS_PER_PAGE_SELECT)
+            self.go_to_element(rows_per_page_button)
+            # Click the dropdown button to open the options
+            rows_per_page_button.click()
+            # Select the option for the current count
+            self.element_is_visible((By.CSS_SELECTOR, f"option[value='{i}']")).click()
+            data.append(self.check_rows_per_page_count())
+        return data
+
+    def check_rows_per_page_count(self):
+        """
+        Check the number of rows currently displayed on the page.
+
+        :return: The number of rows currently displayed on the page.
+        :rtype: int
+        """
+        list_rows = self.elements_are_present(self.locators.FULL_PERSONS_LIST)
+        return len(list_rows)
+
