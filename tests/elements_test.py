@@ -115,9 +115,9 @@ class TestElements:
             buttons_page = ButtonsPage(driver, "https://demoqa.com/buttons")
             # Opening the URL in the browser
             buttons_page.open()
-            double = buttons_page.click_buttons('double')
-            right = buttons_page.click_buttons('right')
-            left = buttons_page.click_buttons('left')
+            double = buttons_page.click_double_button()
+            right = buttons_page.click_right_button()
+            left = buttons_page.click_dynamic_button()
             assert double == "You have done a double click", "The double click button was not pressed."
             assert right == "You have done a right click", "The right click button was not pressed."
             assert left == "You have done a dynamic click", "The dynamic click button was not pressed."

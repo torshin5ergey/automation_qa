@@ -167,7 +167,7 @@ class WebTablePage(BasePage):
 
     def check_added_person(self):
         """
-        Retrieve the details of added persons from the web table.
+        Return the details of added persons from the web table.
 
         :return: A list containing the details of added persons.
         :rtype: list
@@ -189,7 +189,7 @@ class WebTablePage(BasePage):
 
     def check_search_person(self):
         """
-        Check and retrieve data about a person in a table row.
+        Check and return data about a person in a table row.
 
         :return: A list with person's data from the table row
         :rtype: list
@@ -201,7 +201,7 @@ class WebTablePage(BasePage):
 
     def edit_person_info(self):
         """
-        Edit person random data field
+        Edit person random data field and return edited data
 
         :return: Edited data
         :rtype: str
@@ -236,7 +236,7 @@ class WebTablePage(BasePage):
 
     def check_deleted_person(self):
         """
-        check and retrieve the deletion of a person's entry from the table.
+        Check and return the deletion of a person's entry from the table.
 
         :return: Text of the label indicating no rows are found.
         :rtype str
@@ -245,7 +245,7 @@ class WebTablePage(BasePage):
 
     def change_displayed_rows_count(self):
         """
-        Change the number of rows displayed per page and retrieve the row count for each setting.
+        Change the number of rows displayed per page and return the row count for each setting.
 
         :return: A list of actual row counts displayed for each setting.
         :rtype: list
@@ -276,23 +276,43 @@ class WebTablePage(BasePage):
 
 class ButtonsPage(BasePage):
     locators = ButtonsLocators()
-    # TODO: 3 different methods for every button
 
-    def click_buttons(self, button_type):
-        if button_type == "double":
-            self.action_double_click(self.element_is_visible(self.locators.DOUBLE_CLICK_BUTTON))
-            return self.check_clicked_buttons(self.locators.DOUBLE_CLICK_OUTPUT_RESULT)
-        if button_type == "right":
-            self.action_right_click(self.element_is_visible(self.locators.RIGHT_CLICK_BUTTON))
-            return self.check_clicked_buttons(self.locators.RIGHT_CLICK_OUTPUT_RESULT)
-        if button_type == "left":
-            self.element_is_visible(self.locators.LEFT_CLICK_BUTTON).click()
-            return self.check_clicked_buttons(self.locators.LEFT_CLICK_OUTPUT_RESULT)
+    def click_double_button(self):
+        """
+        Perform double-click action on the button and return output text.
+
+        :return: The output text after the double-click action.
+        :rtype: str
+        """
+        self.action_double_click(self.element_is_visible(self.locators.DOUBLE_CLICK_BUTTON))
+        return self.check_clicked_buttons(self.locators.DOUBLE_CLICK_OUTPUT_RESULT)
+
+    def click_right_button(self):
+        """
+        Perform a right-click action on the right-click button and return the result.
+
+        :return: The output text after the right-click action.
+        :rtype: str
+        """
+        self.action_right_click(self.element_is_visible(self.locators.RIGHT_CLICK_BUTTON))
+        return self.check_clicked_buttons(self.locators.RIGHT_CLICK_OUTPUT_RESULT)
+
+    def click_dynamic_button(self):
+        """
+        Perform a click action on the dynamically loaded button and return the result.
+
+        :return: The result text after the click action.
+        :rtype: str
+        """
+        self.element_is_visible(self.locators.LEFT_CLICK_BUTTON).click()
+        return self.check_clicked_buttons(self.locators.LEFT_CLICK_OUTPUT_RESULT)
 
     def check_clicked_buttons(self, element):
         """
-
-        :param element:
-        :return:
+        Check the result of the click actions by getting the text of the specified element.
+        :param element: The locator of the element to check output result.
+        :type element: WebElement
+        :return: The text of the output for element.
+        :rtype: str
         """
         return self.element_is_present(element).text
