@@ -25,14 +25,14 @@ class CheckBoxLocators:  # Locator constants for the CheckBox page
     OUTPUT_RESULT = (By.CSS_SELECTOR, "span[class='text-success']")
 
 
-class RadioButtonLocators:  # Locators constants for the RadioButton page
+class RadioButtonLocators:  # Locator constants for the RadioButton page
     RADIO_YES = (By.CSS_SELECTOR, "label[class^='custom-control'][for='yesRadio']")
     RADIO_IMPRESSIVE = (By.CSS_SELECTOR, "label[class^='custom-control'][for='impressiveRadio']")
     RADIO_NO = (By.CSS_SELECTOR, "label[class^='custom-control'][for='noRadio']")
     OUTPUT_RESULT = (By.CSS_SELECTOR, "p span[class='text-success']")
 
 
-class WebTableLocators:  # Locators constants for the WebTable page
+class WebTableLocators:  # Locator constants for the WebTable page
     # Add person form
     ADD_BUTTON = (By.CSS_SELECTOR, "button[id='addNewRecordButton']")
     FIRST_NAME_INPUT = (By.CSS_SELECTOR, "input[id='firstName']")
@@ -51,3 +51,14 @@ class WebTableLocators:  # Locators constants for the WebTable page
     ROWS_PER_PAGE_SELECT = (By.CSS_SELECTOR, "select[aria-label='rows per page']")
     # Edit person form
     UPDATE_BUTTON = (By.CSS_SELECTOR, "span[title='Edit']")
+
+
+class ButtonsLocators:  # Locator constants for the Buttons page
+    # Buttons
+    DOUBLE_CLICK_BUTTON = (By.CSS_SELECTOR, "button[id='doubleClickBtn']")
+    RIGHT_CLICK_BUTTON = (By.CSS_SELECTOR, "button[id='rightClickBtn']")
+    LEFT_CLICK_BUTTON = (By.XPATH, "//button[text()='Click Me']")
+    # Output labels
+    DOUBLE_CLICK_OUTPUT_RESULT = (By.CSS_SELECTOR, "p[id='doubleClickMessage']")
+    RIGHT_CLICK_OUTPUT_RESULT = (By.CSS_SELECTOR, "p[id='rightClickMessage']")
+    LEFT_CLICK_OUTPUT_RESULT = (By.CSS_SELECTOR, "p[id='dynamicClickMessage']")

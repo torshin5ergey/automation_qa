@@ -1,3 +1,4 @@
+from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -100,3 +101,23 @@ class BasePage:
         :type element: WebElement
         """
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
+
+    def action_double_click(self, element):
+        """
+
+        :param element:
+        :return:
+        """
+        action = ActionChains(self.driver)
+        action.double_click(element)
+        action.perform()
+
+    def action_right_click(self, element):
+        """
+
+        :param element:
+        :return:
+        """
+        action = ActionChains(self.driver)
+        action.context_click(element)
+        action.perform()

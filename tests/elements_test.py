@@ -2,7 +2,7 @@ import random
 import time
 
 from pages.base_page import BasePage
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage
 from conftest import driver  # Importing the WebDriver instance as a fixture
 
 
@@ -77,7 +77,6 @@ class TestElements:
             assert new_person_keyword in table_result, "The person was not found in the table."
 
         def test_webtable_edit_person(self, driver):
-            # TODO: Edit random data field
             # Creating an instance of the WebTablePage class with the WebDriver instance and checkbox URL
             webtable_page = WebTablePage(driver, "https://demoqa.com/webtables")
             # Opening the URL in the browser
@@ -86,9 +85,9 @@ class TestElements:
             lastname = webtable_page.add_new_person()[1]
             # Search added person by lastname
             webtable_page.search_person(lastname)
-            age = webtable_page.edit_person_info()
+            edited_data = webtable_page.edit_person_info()
             row = webtable_page.check_search_person()
-            assert age in row, "The person data has not been changed."
+            assert edited_data in row, "The person data has not been changed."
 
         def test_webtable_delete_person(self, driver):
             # Creating an instance of the WebTablePage class with the WebDriver instance and checkbox URL
@@ -109,3 +108,17 @@ class TestElements:
             webtable_page.open()
             count = webtable_page.change_displayed_rows_count()
             assert count == [5, 10, 20, 25, 50, 100], ("The rows per page number has not been changed or has changed incorrectly.")
+
+    class TestButtonsPage:  # Click, Double-click, Right-click Page functionality
+        def test_buttons_clicks(self, driver):
+            # Creating an instance of the ButtonsPage class with the WebDriver instance and checkbox URL
+            buttons_page = ButtonsPage(driver, "https://demoqa.com/buttons")
+            # Opening the URL in the browser
+            buttons_page.open()
+            double = buttons_page.click_buttons('double')
+            right = buttons_page.click_buttons('right')
+            left = buttons_page.click_buttons('left')
+            assert double == "You have done a double click", "The double click button was not pressed."
+            assert right == "You have done a right click", "The right click button was not pressed."
+            assert left == "You have done a dynamic click", "The dynamic click button was not pressed."
+

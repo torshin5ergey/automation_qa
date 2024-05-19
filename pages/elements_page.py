@@ -4,7 +4,8 @@ import time
 from selenium.webdriver.common.by import By
 
 from generator.generator import generate_person
-from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators
+from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators, \
+    ButtonsLocators
 from pages.base_page import BasePage
 
 
@@ -200,20 +201,32 @@ class WebTablePage(BasePage):
 
     def edit_person_info(self):
         """
-        Edit person age data
+        Edit person random data field
 
-        :return: Edited data (age)
+        :return: Edited data
         :rtype: str
         """
-        # TODO: edit random data
         # Generating new person age data
         person_info = next(generate_person())
-        age = person_info.age
+        # Selecting random person data field and getting its value
+        random_field = random.choice(list(vars(person_info).keys()))
+        data_to_edit = getattr(person_info, random_field)
+        # Defining needed field locator
+        fields_locators = {
+            'firstname': self.locators.FIRST_NAME_INPUT,
+            'lastname': self.locators.LAST_NAME_INPUT,
+            'email': self.locators.EMAIL_INPUT,
+            'age': self.locators.AGE_INPUT,
+            'salary': self.locators.SALARY_INPUT,
+            'department': self.locators.DEPARTMENT_INPUT
+        }
+        field_to_edit_locator = fields_locators[random_field]
+        # Editing data
         self.element_is_visible(self.locators.UPDATE_BUTTON).click()
-        self.element_is_visible(self.locators.AGE_INPUT).clear()
-        self.element_is_visible(self.locators.AGE_INPUT).send_keys(age)
+        self.element_is_visible(field_to_edit_locator).clear()
+        self.element_is_visible(field_to_edit_locator).send_keys(data_to_edit)
         self.element_is_visible(self.locators.SUBMIT_BUTTON).click()
-        return str(age)
+        return str(data_to_edit)
 
     def delete_person(self):
         """
@@ -260,3 +273,26 @@ class WebTablePage(BasePage):
         list_rows = self.elements_are_present(self.locators.FULL_PERSONS_LIST)
         return len(list_rows)
 
+
+class ButtonsPage(BasePage):
+    locators = ButtonsLocators()
+    # TODO: 3 different methods for every button
+
+    def click_buttons(self, button_type):
+        if button_type == "double":
+            self.action_double_click(self.element_is_visible(self.locators.DOUBLE_CLICK_BUTTON))
+            return self.check_clicked_buttons(self.locators.DOUBLE_CLICK_OUTPUT_RESULT)
+        if button_type == "right":
+            self.action_right_click(self.element_is_visible(self.locators.RIGHT_CLICK_BUTTON))
+            return self.check_clicked_buttons(self.locators.RIGHT_CLICK_OUTPUT_RESULT)
+        if button_type == "left":
+            self.element_is_visible(self.locators.LEFT_CLICK_BUTTON).click()
+            return self.check_clicked_buttons(self.locators.LEFT_CLICK_OUTPUT_RESULT)
+
+    def check_clicked_buttons(self, element):
+        """
+
+        :param element:
+        :return:
+        """
+        return self.element_is_present(element).text
