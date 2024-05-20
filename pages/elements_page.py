@@ -1,15 +1,17 @@
 import random
 import time
 
+import requests
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 
 from generator.generator import generate_person
 from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators, \
-    ButtonsLocators
+    ButtonsLocators, LinksPageLocators
 from pages.base_page import BasePage
 
 
-class TextBoxPage(BasePage):  # TextBoxPage, inheriting from BasePage
+class TextBoxPage(BasePage):  # https://demoqa.com/text-box
     locators = TextBoxLocators  # Setting locators attribute to TextBoxLocators class for element locators
 
     def fill_all_fields(self):
@@ -45,7 +47,7 @@ class TextBoxPage(BasePage):  # TextBoxPage, inheriting from BasePage
         return full_name, email, current_address, permanent_address
 
 
-class CheckBoxPage(BasePage):  # CheckBoxPage, inheriting from BasePage
+class CheckBoxPage(BasePage):  # https://demoqa.com/checkbox
     locators = CheckBoxLocators  # Setting locators attribute to CheckBoxLocators class for element locators
 
     def open_full_list(self):
@@ -99,7 +101,7 @@ class CheckBoxPage(BasePage):  # CheckBoxPage, inheriting from BasePage
         return str(data).lower().replace(' ', '')
 
 
-class RadioButtonPage(BasePage):  # RadioButtonPage, inheriting from BasePage
+class RadioButtonPage(BasePage):  # https://demoqa.com/radio-button
     locators = RadioButtonLocators()  # Setting locators attribute to RadioButtonLocators class for element locators
 
     def click_radio(self, choice):
@@ -132,7 +134,7 @@ class RadioButtonPage(BasePage):  # RadioButtonPage, inheriting from BasePage
         return ''.join(data).lower().replace(' ', '')
 
 
-class WebTablePage(BasePage):
+class WebTablePage(BasePage):  # https://demoqa.com/webtables
     locators = WebTableLocators()  # Setting locators attribute to WebTableLocators class for element locators
 
     def add_new_person(self, count=1):
@@ -274,7 +276,7 @@ class WebTablePage(BasePage):
         return len(list_rows)
 
 
-class ButtonsPage(BasePage):
+class ButtonsPage(BasePage):  # https://demoqa.com/buttons
     locators = ButtonsLocators()
 
     def click_double_button(self):
@@ -316,3 +318,57 @@ class ButtonsPage(BasePage):
         :rtype: str
         """
         return self.element_is_present(element).text
+
+
+class LinksPage(BasePage):  # https://demoqa.com/links
+    locators = LinksPageLocators()
+
+    def check_new_tab_simple_link(self):
+        """
+        Check if a simple link opens in a new tab and returns the URL.
+
+        :return: A tuple containing the href of the link and the URL of the new tab, or an error message and None
+        :rtype: tuple
+        """
+        try:  # Locate the simple link element
+            simple_link = self.element_is_visible(self.locators.SIMPLE_LINK)
+        except Exception as e:
+            return f"Error locating simple link: {str(e)}.", None
+
+        link_href = simple_link.get_attribute('href')
+        try:  # Send a request to the link URL
+            request = requests.get(link_href)
+            request.raise_for_status()
+        except requests.RequestException as e:
+            return f"Error requesting simple link: {str(e)}.", None
+
+        try:
+            # Click and open new tab
+            simple_link.click()
+            # Switch to new tab with handle 1
+            self.driver.switch_to.window(self.driver.window_handles[1])
+            # Get the current tab url
+            url = self.driver.current_url
+            return link_href, url
+        except TimeoutException:
+            return link_href, "Error: new tab did not open in time."
+        except Exception as e:
+            return link_href, f"Error: {str(e)}."
+
+    def check_broken_link(self, url):
+        """
+        Check if a link is broken by sending a request to the URL and performing an action based on the response.
+
+        :param url: The URL with bad request response
+        :type url: str
+        :return: Status code if the request fails
+        :rtype: int or None
+        """
+        request = requests.get(url)
+        if request.status_code == 200:
+            try:
+                self.element_is_present(self.locators.BAD_REQUEST).click()
+            except Exception as e:
+                return f"Error clicking bad request link: {str(e)}."
+        else:
+            return request.status_code

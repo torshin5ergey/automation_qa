@@ -62,3 +62,8 @@ class ButtonsLocators:  # Locator constants for the Buttons page
     DOUBLE_CLICK_OUTPUT_RESULT = (By.CSS_SELECTOR, "p[id='doubleClickMessage']")
     RIGHT_CLICK_OUTPUT_RESULT = (By.CSS_SELECTOR, "p[id='rightClickMessage']")
     LEFT_CLICK_OUTPUT_RESULT = (By.CSS_SELECTOR, "p[id='dynamicClickMessage']")
+
+
+class LinksPageLocators:  # Locator constants for the Links page
+    SIMPLE_LINK = (By.CSS_SELECTOR, "a[id='simpleLink']")  # Home
+    BAD_REQUEST = (By.CSS_SELECTOR, "a[id='bad-request']")
