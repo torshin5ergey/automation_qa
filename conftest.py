@@ -13,9 +13,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 @pytest.fixture()
 def driver():
     # Initializing the Edge driver using WebDriver Manager
-    driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
+    # driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
     # Initializing the Chrome driver using WebDriver Manager
-    # driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
     # Maximizing the browser window size
     driver.maximize_window()
