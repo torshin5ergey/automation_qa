@@ -241,7 +241,7 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         Check and return the deletion of a person's entry from the table.
 
         :return: Text of the label indicating no rows are found.
-        :rtype str
+        :rtype: str
         """
         return self.element_is_present(self.locators.NO_ROWS_FOUND_LABEL).text
 
