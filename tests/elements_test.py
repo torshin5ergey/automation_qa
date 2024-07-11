@@ -2,7 +2,8 @@ import random
 import time
 
 from pages.base_page import BasePage
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
+    UploadDownloadPage
 from conftest import driver  # Importing the WebDriver instance as a fixture
 
 
@@ -204,3 +205,19 @@ class TestElements:
             link_response = links_page.get_link_output_response(response_code, "Not Found")
             assert response_code == expected_response_code, "Error: The link works or status code is not 404."
             assert link_response == True, "Error: The output text doesnt contains status code or status message."
+
+    class TestUploadDownload:
+        def test_upload_file(self, driver):
+            # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
+            upload_download_page = UploadDownloadPage(driver, "https://demoqa.com/upload-download")
+            # Opening the URL in the browser
+            upload_download_page.open()
+
+            filename, result = upload_download_page.upload_file()
+            assert filename == result
+
+        def test_download_file(self, driver):
+            # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
+            upload_download_page = UploadDownloadPage(driver, "https://demoqa.com/upload-download")
+            # Opening the URL in the browser
+            upload_download_page.open()

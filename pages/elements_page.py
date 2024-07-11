@@ -1,13 +1,15 @@
+import os
 import random
 import time
+from pathlib import Path
 
 import requests
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 
-from generator.generator import generate_person
+from generator.generator import generate_person, generate_file
 from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators, \
-    ButtonsLocators, LinksPageLocators
+    ButtonsLocators, LinksPageLocators, UploadDownloadPageLocators
 from pages.base_page import BasePage
 
 
@@ -71,7 +73,7 @@ class CheckBoxPage(BasePage):  # https://demoqa.com/checkbox
         repeats = 21  # Loop repeats
         # Random items selecting loop
         while repeats != 0:
-            item = item_list[random.randint(1, item_list.len())]  # Select random item
+            item = item_list[random.randint(1, len(item_list))]  # Select random item
             if repeats > 0:
                 self.go_to_element(item)  # Scrolling to the selected checkbox
                 item.click()
@@ -216,8 +218,8 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         data_to_edit = getattr(person_info, random_field)
         # Defining needed field locator
         fields_locators = {
-            'firstname': self.locators.FIRST_NAME_INPUT,
-            'lastname': self.locators.LAST_NAME_INPUT,
+            'first_name': self.locators.FIRST_NAME_INPUT,
+            'last_name': self.locators.LAST_NAME_INPUT,
             'email': self.locators.EMAIL_INPUT,
             'age': self.locators.AGE_INPUT,
             'salary': self.locators.SALARY_INPUT,
@@ -379,7 +381,6 @@ class LinksPage(BasePage):  # https://demoqa.com/links
         except Exception as e:
             return link_href, f"Error: {str(e)}."
 
-
     def get_link_output_response(self, code, status_text):
         """Check if the output text contains the specified status code and status message.
 
@@ -395,7 +396,6 @@ class LinksPage(BasePage):  # https://demoqa.com/links
             return True
         else:
             return False
-
 
     def check_apicall_link(self, url, expected_code):
         """Check if a link returns the expected status code and click the corresponding link element.
@@ -419,5 +419,30 @@ class LinksPage(BasePage):  # https://demoqa.com/links
             try:
                 self.element_is_present(buttons[expected_code]).click()
             except Exception as e:
-                    return f"Error clicking link: {str(e)}."
+                return f"Error clicking link: {str(e)}."
         return request.status_code
+
+
+class UploadDownloadPage(BasePage):
+    """Upload and Download Page."""
+    locators = UploadDownloadPageLocators()
+
+    def upload_file(self):
+        """Generate a file, upload it, and check the uploaded result.
+
+        Returns:
+            tuple: A tuple containing the filename and the name of the uploaded file from page.
+        """
+        filename, path = generate_file()  # Create file
+        self.element_is_present(self.locators.UPLOAD_INPUT).send_keys(str(path))  # Upload file
+        os.remove(path)  # Delete file
+        result = self.element_is_present(self.locators.UPLOADED_RESULT).text
+        # Convert path strings to Path objects
+        filename_path = Path(filename).resolve()
+        result_path = Path(result).resolve()
+        return filename_path.name, result_path.name
+
+    def download_file(self):
+        """"""
+
+        pass

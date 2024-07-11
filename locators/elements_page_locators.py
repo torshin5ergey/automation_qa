@@ -74,3 +74,12 @@ class LinksPageLocators:  # Locator constants for the Links page
     UNAUTHORIZED_LINK = (By.CSS_SELECTOR, "a[id='unauthorized']")  # 401
     FORBIDDEN_LINK = (By.CSS_SELECTOR, "a[id='forbidden']")  # 403
     NOTFOUND_LINK = (By.CSS_SELECTOR, "a[id='invalid-url']")  # 404
+
+
+class UploadDownloadPageLocators:
+    """Locator constants for the Upload & Download page."""
+    # Upload
+    UPLOAD_INPUT = (By.CSS_SELECTOR, 'input[id="uploadFile"]')
+    UPLOADED_RESULT = (By.CSS_SELECTOR, 'p[id="uploadedFilePath"]')
+    # Download
+    DOWNLOAD_INPUT = (By.CSS_SELECTOR, 'input[id="uploadFile"]')
