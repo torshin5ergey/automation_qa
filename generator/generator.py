@@ -23,16 +23,19 @@ def generate_person():
     )
 
 
-def generate_file():
-    """Generate test text file.
+def generate_file(ext):
+    """Generate test file.
+
+    Args:
+        ext (str): Generated file extension (e.g. txt, jpg).
 
     Returns:
         tuple: A tuple containing the generated file name and path to the file.
     """
     # Running file directory absolute path
     current_dir_path = Path(__file__).resolve().parent  # (...project/generator/)
-    test_file_path = current_dir_path / Path(f'testfile{random.randint(0,999)}.txt')
-    with open(test_file_path, 'w+', encoding='utf-8') as f:
-        f.write(f"Hello, World!{random.randint(0, 999)}")
-
+    test_file_path = current_dir_path / Path(f'testfile{random.randint(0,999)}.{ext}')
+    if ext == 'txt':
+        with open(test_file_path, 'w+', encoding='utf-8') as f:
+            f.write(f"Hello, World!{random.randint(0, 999)}")
     return f.name, test_file_path

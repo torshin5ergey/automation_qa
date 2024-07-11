@@ -82,4 +82,4 @@ class UploadDownloadPageLocators:
     UPLOAD_INPUT = (By.CSS_SELECTOR, 'input[id="uploadFile"]')
     UPLOADED_RESULT = (By.CSS_SELECTOR, 'p[id="uploadedFilePath"]')
     # Download
-    DOWNLOAD_INPUT = (By.CSS_SELECTOR, 'input[id="uploadFile"]')
+    DOWNLOAD_INPUT = (By.CSS_SELECTOR, 'a[id="downloadButton"]')

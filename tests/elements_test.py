@@ -214,10 +214,13 @@ class TestElements:
             upload_download_page.open()
 
             filename, result = upload_download_page.upload_file()
-            assert filename == result
+            assert filename == result, "Error: The file has not been uploaded."
 
         def test_download_file(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             upload_download_page = UploadDownloadPage(driver, "https://demoqa.com/upload-download")
             # Opening the URL in the browser
             upload_download_page.open()
+
+            check = upload_download_page.download_file()
+            assert check is True, "Error: The file has not been downloaded."

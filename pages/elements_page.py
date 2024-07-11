@@ -1,3 +1,4 @@
+import base64
 import os
 import random
 import time
@@ -433,7 +434,7 @@ class UploadDownloadPage(BasePage):
         Returns:
             tuple: A tuple containing the filename and the name of the uploaded file from page.
         """
-        filename, path = generate_file()  # Create file
+        filename, path = generate_file('txt')  # Create file
         self.element_is_present(self.locators.UPLOAD_INPUT).send_keys(str(path))  # Upload file
         os.remove(path)  # Delete file
         result = self.element_is_present(self.locators.UPLOADED_RESULT).text
@@ -443,6 +444,19 @@ class UploadDownloadPage(BasePage):
         return filename_path.name, result_path.name
 
     def download_file(self):
-        """"""
+        """Download a file from a base64 encoded URL, check its existence, and delete it.
 
-        pass
+        Returns:
+            bool: True if the file was successfully created and deleted, False otherwise.
+        """
+        file_link = self.element_is_present(self.locators.DOWNLOAD_INPUT).get_attribute('href')
+        # Decode base64 URL
+        file_link_b64 = base64.b64decode(file_link)
+        filename, path = generate_file('jpg')  # Create jpg file
+        with open(path, 'wb+') as f:
+            offset = file_link_b64.find(b'\xff\xd8')  # The file payload start bites
+            # Write bites to the file.
+            f.write(file_link_b64[offset:])
+            check_file = os.path.exists(path)
+        os.remove(path)
+        return check_file
