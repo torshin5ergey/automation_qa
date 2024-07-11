@@ -15,11 +15,16 @@ class TextBoxPage(BasePage):  # https://demoqa.com/text-box
     locators = TextBoxLocators  # Setting locators attribute to TextBoxLocators class for element locators
 
     def fill_all_fields(self):
-        """
-        Fill all form fields with auto-generated data.
+        """Fill all form fields with auto-generated data.
 
-        :return: full name, email, current address, permanent address.
-        :rtype: tuple
+        Returns:
+            tuple: Person data that auto-generated and filled the inputs.
+            Each element is represented as a string. For example:
+
+            ('Григорий Лаврентьев Денисович',
+            'kovalevdemid@example.com',
+            'п. Энгельс, наб. Ильича, д. 7/7 стр. 2/9, 164499',
+            'д. Бирск, наб. Алтайская, д. 6 стр. 1, 176014'
         """
         person_info = next(generate_person())
         full_name = person_info.full_name
@@ -34,11 +39,16 @@ class TextBoxPage(BasePage):  # https://demoqa.com/text-box
         return full_name, email, current_address, permanent_address
 
     def check_filled_form(self):
-        """
-        Verify the filled form data by extracting text from displayed form fields.
+        """Verify the filled form data by extracting text from form fields.
 
-        :return: full name, email, current address, permanent address extracted from the form.
-        :rtype: tuple
+        Returns:
+            tuple: Person data that extracted from form fields.
+            Each element is represented as a string. For example:
+
+            ('Григорий Лаврентьев Денисович',
+            'kovalevdemid@example.com',
+            'п. Энгельс, наб. Ильича, д. 7/7 стр. 2/9, 164499',
+            'д. Бирск, наб. Алтайская, д. 6 стр. 1, 176014'
         """
         full_name = self.element_is_present(self.locators.OUTPUT_FULL_NAME).text.split(':')[1]
         email = self.element_is_present(self.locators.OUTPUT_EMAIL).text.split(':')[1]
@@ -51,15 +61,11 @@ class CheckBoxPage(BasePage):  # https://demoqa.com/checkbox
     locators = CheckBoxLocators  # Setting locators attribute to CheckBoxLocators class for element locators
 
     def open_full_list(self):
-        """
-        Toggle all checkbox list items.
-        """
+        """Toggle all checkbox list items."""
         self.element_is_visible(self.locators.EXPAND_ALL_BUTTON).click()
 
     def click_random_checkbox(self):
-        """
-        Click random checkboxes.
-        """
+        """Click random checkboxes."""
         # Getting the visible checkboxes list
         item_list = self.elements_are_visible(self.locators.ITEM_LIST)
         repeats = 21  # Loop repeats
@@ -74,11 +80,10 @@ class CheckBoxPage(BasePage):  # https://demoqa.com/checkbox
                 break
 
     def get_checked_checkboxes(self):
-        """
-        Get the text of checked checkboxes.
+        """Get the text of checked checkboxes.
 
-        :return: A formatted string with the text of checked checkboxes in lowercase, with spaces and ".doc" removed.
-        :rtype: str
+        Returns:
+            str: Formatted string with the text of checked checkboxes in lowercase, with spaces and ".doc" removed.
         """
         checked_list = self.elements_are_present(self.locators.CHECKED_ITEMS)
         data = []
@@ -88,11 +93,10 @@ class CheckBoxPage(BasePage):  # https://demoqa.com/checkbox
         return str(data).lower().replace(' ', '').replace('.doc', '')
 
     def get_output_result(self):
-        """
-        Gets the text from result field.
+        """Gets the text from result field.
 
-        :return: A formatted string with the text from the result field in lowercase, with spaces removed.
-        :rtype: str
+        Returns:
+            str: Formatted string with the text from the result field in lowercase, with spaces removed.
         """
         result_list = self.elements_are_visible(self.locators.OUTPUT_RESULT)
         data = []
@@ -105,11 +109,13 @@ class RadioButtonPage(BasePage):  # https://demoqa.com/radio-button
     locators = RadioButtonLocators()  # Setting locators attribute to RadioButtonLocators class for element locators
 
     def click_radio(self, choice):
-        """
-        Click random radio button.
+        """Click a radio button based on the provided choice.
 
-        :param choice: The choice of radio button to click. It can be 'yes', 'impressive', or 'no'.
-        :type choice: str
+        Args:
+            choice (str): The choice of radio button to click ('yes', 'impressive', or 'no').
+
+        Raises:
+            ValueError: If the provided choice is not 'yes', 'impressive', or 'no'.
         """
         choices = {'yes': self.locators.RADIO_YES,
                    'impressive': self.locators.RADIO_IMPRESSIVE,
@@ -121,11 +127,10 @@ class RadioButtonPage(BasePage):  # https://demoqa.com/radio-button
         self.element_is_visible(choices[choice]).click()
 
     def get_output_result(self):
-        """
-        Get the text from result field.
+        """Get the text from result field.
 
-        :return: The text from presented output text field.
-        :rtype: str
+        Returns:
+            str: The text from the presented output text field, formatted to be lowercase with spaces removed.
         """
         result_list = self.elements_are_visible(self.locators.OUTPUT_RESULT)
         data = []
@@ -138,13 +143,13 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
     locators = WebTableLocators()  # Setting locators attribute to WebTableLocators class for element locators
 
     def add_new_person(self, count=1):
-        """
-        Add new count of persons to the web table
+        """Add new count of persons to the web table.
 
-        :param count: The number of persons to add (default is 1).
-        :type count: int
-        :return: A list containing the details of the added persons.
-        :rtype: list
+        Args:
+            count (int): The number of persons to add. The default is 1.
+
+        Returns:
+            list: A list containing the details of the added persons.
         """
         while count != 0:
             # Generating new person data
@@ -168,11 +173,10 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
             return [first_name, last_name, str(age), email, str(salary), department]
 
     def check_added_person(self):
-        """
-        Return the details of added persons from the web table.
+        """Return the details of added persons from the web table.
 
-        :return: A list containing the details of added persons.
-        :rtype: list
+        Returns:
+            list: A list containing the added persons details.
         """
         person_list = self.elements_are_present(self.locators.FULL_PERSONS_LIST)
         data = []
@@ -181,20 +185,18 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         return data
 
     def search_person(self, keyword):
-        """
-        Search person with keyword.
+        """Search person with keyword.
 
-        :param keyword:
-        :type keyword: str
+        Args:
+            keyword (str): The keyword to search for.
         """
         self.element_is_visible(self.locators.SEARCH_INPUT).send_keys(keyword)
 
     def check_search_person(self):
-        """
-        Check and return data about a person in a table row.
+        """Check and return data about a person in a table row.
 
-        :return: A list with person's data from the table row
-        :rtype: list
+        Returns:
+            list: A list with the person's data from the table row.
         """
         # Finding person data with DELETE_BUTTON parent element by XPATH
         delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
@@ -202,11 +204,10 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         return parent_row.text.splitlines()
 
     def edit_person_info(self):
-        """
-        Edit person random data field and return edited data
+        """Edit person random data field and return edited data.
 
-        :return: Edited data
-        :rtype: str
+        Returns:
+            str: Edited data.
         """
         # Generating new person age data
         person_info = next(generate_person())
@@ -231,26 +232,22 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         return str(data_to_edit)
 
     def delete_person(self):
-        """
-        Delete a person's entry from the table.
-        """
+        """Delete a person's entry from the table."""
         self.element_is_visible(self.locators.DELETE_BUTTON).click()
 
     def check_deleted_person(self):
-        """
-        Check and return the deletion of a person's entry from the table.
+        """Check and return the deletion of a person's entry from the table.
 
-        :return: Text of the label indicating no rows are found.
-        :rtype: str
+        Returns:
+            str: Text of the label indicating no rows are found.
         """
         return self.element_is_present(self.locators.NO_ROWS_FOUND_LABEL).text
 
     def change_displayed_rows_count(self):
-        """
-        Change the number of rows displayed per page and return the row count for each setting.
+        """Change the number of rows displayed per page and return the row count for each setting.
 
-        :return: A list of actual row counts displayed for each setting.
-        :rtype: list
+        Returns:
+            list: A list of actual row counts displayed for each setting.
         """
         count = [5, 10, 20, 25, 50, 100]
         data = []
@@ -266,11 +263,10 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         return data
 
     def check_rows_per_page_count(self):
-        """
-        Check the number of rows currently displayed on the page.
+        """Check the number of rows currently displayed on the page.
 
-        :return: The number of rows currently displayed on the page.
-        :rtype: int
+        Returns:
+            int: The number of rows currently displayed on the page.
         """
         list_rows = self.elements_are_present(self.locators.FULL_PERSONS_LIST)
         return len(list_rows)
@@ -280,42 +276,40 @@ class ButtonsPage(BasePage):  # https://demoqa.com/buttons
     locators = ButtonsLocators()
 
     def click_double_button(self):
-        """
-        Perform double-click action on the button and return output text.
+        """Perform double-click action on the button and return output text.
 
-        :return: The output text after the double-click action.
-        :rtype: str
+        Returns:
+            str: The output text after the double-click action.
         """
         self.action_double_click(self.element_is_visible(self.locators.DOUBLE_CLICK_BUTTON))
         return self.check_clicked_buttons(self.locators.DOUBLE_CLICK_OUTPUT_RESULT)
 
     def click_right_button(self):
-        """
-        Perform a right-click action on the right-click button and return the result.
+        """Perform a right-click action on the right-click button and return the result.
 
-        :return: The output text after the right-click action.
-        :rtype: str
+        Returns:
+            str: The output text after the right-click action.
         """
         self.action_right_click(self.element_is_visible(self.locators.RIGHT_CLICK_BUTTON))
         return self.check_clicked_buttons(self.locators.RIGHT_CLICK_OUTPUT_RESULT)
 
     def click_dynamic_button(self):
-        """
-        Perform a click action on the dynamically loaded button and return the result.
+        """Perform a click action on the dynamically loaded button and return the result.
 
-        :return: The result text after the click action.
-        :rtype: str
+        Returns:
+            str: The result text after the click action.
         """
         self.element_is_visible(self.locators.LEFT_CLICK_BUTTON).click()
         return self.check_clicked_buttons(self.locators.LEFT_CLICK_OUTPUT_RESULT)
 
     def check_clicked_buttons(self, element):
-        """
-        Check the result of the click actions by getting the text of the specified element.
-        :param element: The locator of the element to check output result.
-        :type element: WebElement
-        :return: The text of the output for element.
-        :rtype: str
+        """Check the result of the click actions by getting the text of the specified element.
+
+        Args:
+            element (WebElement): The locator of the element to check output result.
+
+        Returns:
+            str: The text of the output for the element.
         """
         return self.element_is_present(element).text
 
@@ -324,11 +318,10 @@ class LinksPage(BasePage):  # https://demoqa.com/links
     locators = LinksPageLocators()
 
     def check_new_tab_simple_link(self):
-        """
-        Check if a simple link opens in a new tab and returns the URL.
+        """Check if a simple link opens in a new tab and returns the URL.
 
-        :return: A tuple containing the href of the link and the URL of the new tab, or an error message and None
-        :rtype: tuple
+        Returns:
+            tuple: A tuple containing the href of the link and the URL of the new tab, or an error message and None.
         """
         try:  # Locate the simple link element
             simple_link = self.element_is_visible(self.locators.SIMPLE_LINK)
@@ -355,20 +348,76 @@ class LinksPage(BasePage):  # https://demoqa.com/links
         except Exception as e:
             return link_href, f"Error: {str(e)}."
 
-    def check_broken_link(self, url):
-        """
-        Check if a link is broken by sending a request to the URL and performing an action based on the response.
+    def check_new_tab_dynamic_link(self):
+        """Check if a dynamic link opens in a new tab and returns the URL.
 
-        :param url: The URL with bad request response
-        :type url: str
-        :return: Status code if the request fails
-        :rtype: int or None
+        Returns:
+            tuple: A tuple containing the href of the link and the URL of the new tab, or an error message and None.
         """
-        request = requests.get(url)
-        if request.status_code == 200:
-            try:
-                self.element_is_present(self.locators.BAD_REQUEST).click()
-            except Exception as e:
-                return f"Error clicking bad request link: {str(e)}."
+        try:  # Locate the simple link element
+            dynamic_link = self.element_is_visible(self.locators.DYNAMIC_LINK)
+        except Exception as e:
+            return f"Error locating dynamic link: {str(e)}.", None
+
+        link_href = dynamic_link.get_attribute('href')
+        try:  # Send a request to the link URL
+            request = requests.get(link_href)
+            request.raise_for_status()
+        except requests.RequestException as e:
+            return f"Error requesting simple link: {str(e)}.", None
+
+        try:
+            # Click and open new tab
+            dynamic_link.click()
+            # Switch to new tab with handle 1
+            self.driver.switch_to.window(self.driver.window_handles[1])
+            # Get the current tab url
+            url = self.driver.current_url
+            return link_href, url
+        except TimeoutException:
+            return link_href, "Error: new tab did not open in time."
+        except Exception as e:
+            return link_href, f"Error: {str(e)}."
+
+
+    def get_link_output_response(self, code, status_text):
+        """Check if the output text contains the specified status code and status message.
+
+        Args:
+            code (int): The status code to check in the output text.
+            status_text (str): The status message to check in the output text.
+
+        Returns:
+            bool: True if both the status code and status message are found in the output text, otherwise False.
+        """
+        output_text = self.element_is_present(self.locators.LINK_RESPONSE_OUTPUT_RESULT).text
+        if str(code) in output_text and status_text in output_text:
+            return True
         else:
-            return request.status_code
+            return False
+
+
+    def check_apicall_link(self, url, expected_code):
+        """Check if a link returns the expected status code and click the corresponding link element.
+
+    Args:
+        url (str): The URL to send the request to.
+        expected_code (int): The expected status code of the response.
+
+    Returns:
+        int: The status code of the response.
+        str: Error message if clicking the link element fails.
+        """
+        buttons = {201: self.locators.CREATED_LINK,
+                   301: self.locators.MOVED_LINK,
+                   400: self.locators.BAD_REQUEST_LINK,
+                   401: self.locators.UNAUTHORIZED_LINK,
+                   403: self.locators.FORBIDDEN_LINK,
+                   404: self.locators.NOTFOUND_LINK}
+        request = requests.get(url)
+        if request.status_code == expected_code:
+            try:
+                self.element_is_present(buttons[expected_code]).click()
+            except Exception as e:
+                    return f"Error clicking link: {str(e)}."
+        return request.status_code

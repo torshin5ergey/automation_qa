@@ -65,5 +65,12 @@ class ButtonsLocators:  # Locator constants for the Buttons page
 
 
 class LinksPageLocators:  # Locator constants for the Links page
-    SIMPLE_LINK = (By.CSS_SELECTOR, "a[id='simpleLink']")  # Home
-    BAD_REQUEST = (By.CSS_SELECTOR, "a[id='bad-request']")
+    SIMPLE_LINK = (By.CSS_SELECTOR, "a[id='simpleLink']")  # 200 Home
+    DYNAMIC_LINK = (By.CSS_SELECTOR, "a[id='dynamicLink']")  # 200 HomeDynamic
+    LINK_RESPONSE_OUTPUT_RESULT = (By.CSS_SELECTOR, "p[id='linkResponse']")
+    CREATED_LINK = (By.CSS_SELECTOR, "a[id='created']")  # 201
+    MOVED_LINK = (By.CSS_SELECTOR, "a[id='moved']")  # 301
+    BAD_REQUEST_LINK = (By.CSS_SELECTOR, "a[id='bad-request']")  # 400
+    UNAUTHORIZED_LINK = (By.CSS_SELECTOR, "a[id='unauthorized']")  # 401
+    FORBIDDEN_LINK = (By.CSS_SELECTOR, "a[id='forbidden']")  # 403
+    NOTFOUND_LINK = (By.CSS_SELECTOR, "a[id='invalid-url']")  # 404

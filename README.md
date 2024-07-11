@@ -67,6 +67,7 @@ $PROJECT_ROOT
     - `TestRadioButton` **Radio Button** page test case. It selects all radio buttons and asserts that the expected output matches the selected radio button for each option. *The "No" radiobutton is disabled, and it is a bug that is founded by this test case*.
     - `TestWebTable` **Web Table** page test cases. It contains: Add person, Search person by random its random data, Edit person's random data field, Delete person by email, Change number of rows displayed per page.
     - `TestButtonsPage` **Buttons** pge test cases. It contains: Double-click button, Right-click (context-click) button, Left-click dynamic ID button.
+    - `TestLinksPage` **Links** page test cases: It contains: Simple link ([200 OK](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200), to home), Dynamic simple link ([200 OK](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200), to home), Created link ([201 Created](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)), No content ([204 No Content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204)),Moved link ([301 Moved Permanently](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/301)), Bad request link([400 Bad Request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400)), Unauthorized link ([401 Unauthorized](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401)), Forbidden link ([403 Forbidden](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403)), Not Found link ([404 Not Found](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404)).
 - `conftest.py`: Pytest configuration file and fixture definitions.
 - `requirements.txt`: Project dependencies.
 
@@ -88,6 +89,12 @@ Sergey Torshin [@torshin5ergey](https://github.com/torshin5ergey)
 
 ## *Notes*
 
-- [Page Object Model (POM)](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/) is used in this project. POM is a design pattern in test automation that separates the logic of testing from the logic of managing web elements. Each web page is represented as a "Page Object" containing methods to interact with page elements (e.g., clicks, text inputs, etc.) and properties to access these elements. By implementing POM, tests become more stable, readable, and easily maintainable. It reduces code duplication and enhances modularity, allowing development and testing teams to efficiently handle changes in the application.
-- [Faker](https://faker.readthedocs.io/en/master/) library is used in this project. Faker is a Python library that generates fake data, such as names, addresses, and phone numbers. By using Faker you can populate data, create mock user profiles, and simulate realistic scenarios without relying on actual sensitive or confidential information. Faker enhances test automation by providing a convenient way to generate diverse and customizable test data, improving test coverage and accuracy.
+- Test creation algorythm:
+  1. Create locators.
+  2. Create page and load locators.
+  3. Create page methods.
+  4. Create test class and its methods.
+- [Page Object Model (POM)](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/) is used in this project. POM is a **design pattern** in test automation that separates the logic of testing from the logic of managing web elements. Each web page is represented as a **Page Object** containing methods to interact with page elements (e.g., clicks, text inputs, etc.) and properties to access these elements. By implementing POM, tests become more stable, readable, and easily maintainable. It reduces code duplication and enhances modularity, allowing development and testing teams to efficiently handle changes in the application.
+- [Faker](https://faker.readthedocs.io/en/master/) library is used in this project. Faker is a Python library that generates fake data, such as names, addresses, and phone numbers. By using Faker you can populate data, create **mock user profiles**, and simulate realistic scenarios without relying on actual sensitive or confidential information. Faker enhances test automation by providing a convenient way to generate diverse and customizable test data, improving test coverage and accuracy.
 - [Requests](https://requests.readthedocs.io/en/latest/) 
+- This project uses [Google style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) inspired **docstrings**.

@@ -123,7 +123,6 @@ class TestElements:
             assert left == "You have done a dynamic click", "Error: The dynamic click button was not pressed."
 
     class TestLinksPage:
-        # TODO: dynamic link, created, no content, moved, bad requests, unauthorized, forbidden, not found
         def test_simple_link(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             links_page = LinksPage(driver, "https://demoqa.com/links")
@@ -132,10 +131,76 @@ class TestElements:
             href_link, current_url = links_page.check_new_tab_simple_link()
             assert href_link == current_url, "Error: The link is broken or url is incorrect."
 
-        def test_broken_link(self, driver):
+        def test_dynamic_link(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             links_page = LinksPage(driver, "https://demoqa.com/links")
             # Opening the URL in the browser
             links_page.open()
-            response_code = links_page.check_broken_link("https://demoqa.com/bad-request")
-            assert response_code == 400, "Error: The link works or status code is not 400."
+            href_link, current_url = links_page.check_new_tab_dynamic_link()
+            assert href_link == current_url, "Error: The link is broken or url is incorrect."
+
+        def test_created_link(self, driver):
+            # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
+            links_page = LinksPage(driver, "https://demoqa.com/links")
+            # Opening the URL in the browser
+            links_page.open()
+            expected_response_code = 201
+            response_code = links_page.check_apicall_link("https://demoqa.com/created", expected_response_code)
+            link_response = links_page.get_link_output_response(response_code, "Created")
+            assert response_code == expected_response_code, "Error: The link doesn't works or status code is not 201."
+            assert link_response == True, "Error: The output text doesnt contains status code or status message."
+
+        def test_moved_link(self, driver):
+            # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
+            links_page = LinksPage(driver, "https://demoqa.com/links")
+            # Opening the URL in the browser
+            links_page.open()
+            expected_response_code = 301
+            response_code = links_page.check_apicall_link("https://demoqa.com/moved", expected_response_code)
+            link_response = links_page.get_link_output_response(response_code, "Moved Permanently")
+            assert response_code == expected_response_code, "Error: The link doesn't works or status code is not 301."
+            assert link_response == True, "Error: The output text doesnt contains status code or status message."
+
+        def test_bad_request_link(self, driver):
+            # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
+            links_page = LinksPage(driver, "https://demoqa.com/links")
+            # Opening the URL in the browser
+            links_page.open()
+            expected_response_code = 400
+            response_code = links_page.check_apicall_link("https://demoqa.com/bad-request", expected_response_code)
+            link_response = links_page.get_link_output_response(response_code, "Bad Request")
+            assert response_code == expected_response_code, "Error: The link works or status code is not 400."
+            assert link_response == True, "Error: The output text doesnt contains status code or status message."
+
+        def test_unauthorized_link(self, driver):
+            # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
+            links_page = LinksPage(driver, "https://demoqa.com/links")
+            # Opening the URL in the browser
+            links_page.open()
+            expected_response_code = 401
+            response_code = links_page.check_apicall_link("https://demoqa.com/unauthorized", expected_response_code)
+            link_response = links_page.get_link_output_response(response_code, "Unauthorized")
+            assert response_code == expected_response_code, "Error: The link works or status code is not 401."
+            assert link_response == True, "Error: The output text doesnt contains status code or status message."
+
+        def test_forbidden_link(self, driver):
+            # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
+            links_page = LinksPage(driver, "https://demoqa.com/links")
+            # Opening the URL in the browser
+            links_page.open()
+            expected_response_code = 403
+            response_code = links_page.check_apicall_link("https://demoqa.com/forbidden", expected_response_code)
+            link_response = links_page.get_link_output_response(response_code, "Forbidden")
+            assert response_code == expected_response_code, "Error: The link works or status code is not 403."
+            assert link_response == True, "Error: The output text doesnt contains status code or status message."
+
+        def test_notfound_link(self, driver):
+            # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
+            links_page = LinksPage(driver, "https://demoqa.com/links")
+            # Opening the URL in the browser
+            links_page.open()
+            expected_response_code = 404
+            response_code = links_page.check_apicall_link("https://demoqa.com/invalid-url", expected_response_code)
+            link_response = links_page.get_link_output_response(response_code, "Not Found")
+            assert response_code == expected_response_code, "Error: The link works or status code is not 404."
+            assert link_response == True, "Error: The output text doesnt contains status code or status message."
