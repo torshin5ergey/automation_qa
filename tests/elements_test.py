@@ -3,7 +3,7 @@ import time
 
 from pages.base_page import BasePage
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
-    UploadDownloadPage
+    UploadDownloadPage, DynamicPropertiesPage
 from conftest import driver  # Importing the WebDriver instance as a fixture
 
 
@@ -224,3 +224,32 @@ class TestElements:
 
             check = upload_download_page.download_file()
             assert check is True, "Error: The file has not been downloaded."
+
+    class TestDynamicProperties:
+
+        def test_enable_button(self, driver):
+            # Creating an instance of the DynamicPropertiesPage class with the WebDriver instance and checkbox URL
+            dynamic_properties_page = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
+            # Opening the URL in the browser
+            dynamic_properties_page.open()
+
+            is_enabled = dynamic_properties_page.check_enable_button()
+            assert is_enabled is True, 'Error: "Enable After 5 Seconds" button has not been enabled.'
+
+        def test_dynamic_color_property(self, driver):
+            # Creating an instance of the DynamicPropertiesPage class with the WebDriver instance and checkbox URL
+            dynamic_properties_page = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
+            # Opening the URL in the browser
+            dynamic_properties_page.open()
+
+            color_before, color_after = dynamic_properties_page.check_changed_color()
+            assert color_before != color_after, "Error: The dynamic property color has not been changed."
+
+        def test_visible_button(self, driver):
+            # Creating an instance of the DynamicPropertiesPage class with the WebDriver instance and checkbox URL
+            dynamic_properties_page = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
+            # Opening the URL in the browser
+            dynamic_properties_page.open()
+
+            is_visible = dynamic_properties_page.check_visible_button()
+            assert is_visible is True, 'Error: "Visible After 5 Seconds" button has not been appeared.'

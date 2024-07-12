@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 
 from generator.generator import generate_person, generate_file
 from locators.elements_page_locators import TextBoxLocators, CheckBoxLocators, RadioButtonLocators, WebTableLocators, \
-    ButtonsLocators, LinksPageLocators, UploadDownloadPageLocators
+    ButtonsLocators, LinksPageLocators, UploadDownloadPageLocators, DynamicPropertiesPageLocators
 from pages.base_page import BasePage
 
 
@@ -425,7 +425,7 @@ class LinksPage(BasePage):  # https://demoqa.com/links
 
 
 class UploadDownloadPage(BasePage):
-    """Upload and Download Page."""
+    """Upload and Download Page https://demoqa.com/upload-download"""
     locators = UploadDownloadPageLocators()
 
     def upload_file(self):
@@ -460,3 +460,46 @@ class UploadDownloadPage(BasePage):
             check_file = os.path.exists(path)
         os.remove(path)
         return check_file
+
+
+class DynamicPropertiesPage(BasePage):
+    """Dynamic Properties Page https://demoqa.com/dynamic-properties"""
+    locators = DynamicPropertiesPageLocators()
+
+    def check_enable_button(self):
+        """Checks if the 'Enable After 5 seconds' button on the page becomes clickable after a delay.
+
+        Returns:
+            bool: True if the button becomes clickable, False otherwise.
+        """
+        try:
+            self.element_is_clickable(self.locators.ENABLE_AFTER_BUTTON, 6)
+            return True
+        except TimeoutException:
+            return False
+
+    def check_changed_color(self):
+        """
+        Checks if the color of a specific button changes after a delay.
+
+        Returns:
+            tuple: A tuple containing the color of the button before and after the delay.
+        """
+        color_button = self.element_is_present(self.locators.COLOR_CHANGE_BUTTON)
+        color_before = color_button.value_of_css_property('color')
+        time.sleep(5)
+        color_after = color_button.value_of_css_property('color')
+        return color_before, color_after
+
+    def check_visible_button(self):
+        """
+        Checks if the 'Visible After 5 seconds' button on the page becomes visible after a delay.
+
+        Returns:
+            bool: True if the button becomes visible within the timeout, False otherwise.
+        """
+        try:
+            self.element_is_visible(self.locators.VISIBLE_AFTER_BUTTON, 6)
+            return True
+        except TimeoutException:
+            return False
