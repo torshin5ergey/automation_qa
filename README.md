@@ -41,26 +41,29 @@ pytest
 
 ```
 $PROJECT_ROOT
-├── data # Module for storing test data
-│   └── data.py # Data class definition
-├── generator # Module for generating test data
-│   └── generator.py # Script for generating mock data for tests
-├── locators # Module for storing element locators
-│   └── elements_page_locators.py # Locators for elements on test pages
-├── pages # Module for defining page objects
-│   ├── base_page.py # BasePage class for common page functionalities
-│   └── element_page.py # Page classes for individual web pages
+├── data  # Module for storing test data
+│   └── data.py  # Data class definition
+├── generator  # Module for generating test data
+│   └── generator.py  # Script for generating mock data for tests
+├── locators  # Module for storing element locators
+│   ├── elements_page_locators.py  # Locators for elements in Elements section
+│   └── forms_page_locators.py  # Locators for elements in Forms section
+├── pages  # Module for defining page objects
+│   ├── base_page.py  # BasePage class for common page functionalities
+│   ├── element_page.py  # Page classes for pages in Elements section
+│   └── forms_page.py  # Page classes for pages in Forms section
 ├── tests # Module for test cases
-│   └── elements_test.py # Test cases for website elements
-├── conftest.py # Pytest configuration and fixture definition
-├── README.md # This README file
-└── requirements.txt # File containing project dependencies
+│   ├── elements_test.py  # Test cases for Elements section
+│   └── forms_test.py  # Test cases for Forms section
+├── conftest.py  # Pytest configuration and fixture definition
+├── README.md  # This README file
+└── requirements.txt  # Project dependencies
 ```
 - `data`: Test data classes.
 - `generator`: Generating fake data script.
 - `locators`: Web pages element locators.
-  - `elements_page_locators`: Locators for pages in Elements section.
-  - `forms_page_locators`: Locators for page in Forms section.
+  - `elements_page_locators`
+  - `forms_page_locators`
 - `pages`: Page objects representing individual web pages.
 - `tests`: Test cases for website objects.
   - `elements_test.py`: Test cases for Elements pages.
