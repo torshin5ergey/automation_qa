@@ -59,6 +59,8 @@ $PROJECT_ROOT
 - `data`: Test data classes.
 - `generator`: Generating fake data script.
 - `locators`: Web pages element locators.
+  - `elements_page_locators`: Locators for pages in Elements section.
+  - `forms_page_locators`: Locators for page in Forms section.
 - `pages`: Page objects representing individual web pages.
 - `tests`: Test cases for website objects.
   - `elements_test.py`: Test cases for Elements pages.
@@ -70,6 +72,8 @@ $PROJECT_ROOT
     - `TestLinksPage` **Links** page test cases. It contains: Simple link ([200 OK](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200), to home), Dynamic simple link ([200 OK](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200), to home), Created link ([201 Created](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)), No content ([204 No Content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204)),Moved link ([301 Moved Permanently](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/301)), Bad request link([400 Bad Request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400)), Unauthorized link ([401 Unauthorized](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401)), Forbidden link ([403 Forbidden](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403)), Not Found link ([404 Not Found](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404)).
     - `TestUploadDownload` **Upload and Download files** page test cases. It contains: Upload and download file.
     - `TestDynamicProperties` **Dynamic Properties** page test case. It contains: The "Enable After 5 Seconds" button becomes clickable within a timeout, The color of the "Color Change" button changes after a 5 seconds delay, The "Visible After 5 Seconds" button becomes visible after a 5 seconds delay. *This tests may not work correctly with the `webdriver_manager` library, because in that case the test startup will be much later than the change of dynamic properties.*
+  - `forms_test.py`: Test cases for Practice Form in Forms section.
+    - `TestFormsPage` **Practice Form** page test case. Generates data and verifies that the form can be correctly filled and submitted.
 - `conftest.py`: Pytest configuration file and fixture definitions.
 - `requirements.txt`: Project dependencies.
 

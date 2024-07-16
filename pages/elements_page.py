@@ -216,7 +216,7 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         person_info = next(generate_person())
         # Exclude unavailable for edit person fields
         available_fields = [field for field in list(vars(person_info).keys())
-                            if field not in ['full_name', 'current_address', 'permanent_address']]
+                            if field in ['first_name', 'last_name', 'email', 'age', 'salary', 'department']]
         # Selecting random person data field and getting its value
         random_field = random.choice(available_fields)
         data_to_edit = getattr(person_info, random_field)

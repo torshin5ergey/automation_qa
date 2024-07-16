@@ -12,3 +12,4 @@ class Person:  # Class to store a variety of a person parameters
     department: str = None
     current_address: str = None
     permanent_address: str = None
+    phone: str = None
