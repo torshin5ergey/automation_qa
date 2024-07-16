@@ -38,4 +38,6 @@ def generate_file(ext):
     if ext == 'txt':
         with open(test_file_path, 'w+', encoding='utf-8') as f:
             f.write(f"Hello, World!{random.randint(0, 999)}")
+    else:
+        f = open(test_file_path, 'w+', encoding='utf-8')
     return f.name, test_file_path
