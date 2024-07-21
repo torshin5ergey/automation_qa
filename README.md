@@ -9,10 +9,10 @@ It is inspired by a YouTube course project [Автоматизация тест�
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
+- [Notes](#notes)
 - [Requirements](#requirements)
 - [License](#license)
 - [Author](#author)
-- [Notes](#notes)
 
 ## Installation
 
@@ -71,7 +71,8 @@ $PROJECT_ROOT
 - `pages`: Page objects representing individual web pages.
 - `tests`: Test cases for website objects.
   - `afw_test.py`: Test cases for Alerts, Frame & Windows pages.
-    - `TestBrowserWindows` **Browser Windows** page test cases.
+    - `TestBrowserWindows` **Browser Windows** page test cases. Both tests assert the header to confirm that the new tab or window has opened correctly and displays the
+    - `TestAlerts` **Alerts** page test cases. 
   - `elements_test.py`: Test cases for Elements pages.
     - `TestTextBox` **Text Box** page test case. It fills all text fields with fake user data and asserts that the filled data matches the expected data for each field.
     - `TestCheckBox` **Check Box** page test case. It toggles all items, selects a random checkboxes, retrieves the checked checkboxes, and asserts that the selected checkboxes match the output result.

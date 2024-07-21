@@ -10,114 +10,113 @@ class BasePage:
         self.url = url
 
     def open(self):
-        """
-        Open the URL in the WebDriver browser instance
-        """
+        """Open the URL in the WebDriver browser instance."""
         self.driver.get(self.url)
 
     def element_is_visible(self, locator, timeout=5):
-        """
-        Wait until the element identified by the locator becomes visible on the webpage.
+        """Wait until the element identified by the locator becomes visible on the webpage.
 
-        :param locator: A tuple (By, value) identifying the element to wait for.
-        :type locator: tuple
-        :param timeout: Maximum time to wait for the element to become visible (default is 5 seconds).
-        :type timeout: int
-        :return: The located WebElement once it is visible.
-        :rtype: WebElement
+        Args:
+            locator (WebElement): The locator used to find the element.
+            timeout (int): The maximum amount of time to wait for the element to be visible. Default is 5 seconds.
+
+        Returns:
+            WebElement: The WebElement once it is located and visible.
         """
         return wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
 
     def elements_are_visible(self, locator, timeout=5):
-        """
-        Wait until all elements identified by the locator become visible on the webpage.
+        """Wait until all elements identified by the locator become visible on the webpage.
 
-        :param locator: A tuple (By, value) identifying the elements to wait for.
-        :type locator: tuple
-        :param timeout: Maximum time to wait for the elements to become visible (default is 5 seconds).
-        :type timeout: int
-        :return: The list of located WebElements once all are visible.
-        :rtype: WebElement
+        Args:
+            locator (WebElement): The locator used to find the elements.
+            timeout (int): The maximum amount of time to wait for the elements to be visible. Default is 5 seconds.
+
+        Returns:
+            list: A list of WebElements once they are located and visible.
         """
         return wait(self.driver, timeout).until(EC.visibility_of_all_elements_located(locator))
 
     def element_is_present(self, locator, timeout=5):
-        """
-        Wait until the element identified by the locator becomes present in the DOM of the webpage.
+        """Wait until the element identified by the locator becomes present in the DOM of the webpage.
 
-        :param locator: A tuple (By, value) identifying the element to wait for.
-        :type locator: tuple
-        :param timeout: Maximum time to wait for the element to become present (default is 5 seconds).
-        :type timeout: int
-        :return: The located WebElement once it is present.
-        :rtype: WebElement
+        Args:
+            locator (WebElement): The locator used to find the element.
+            timeout (int): The maximum amount of time to wait for the element to be present. Default is 5 seconds.
+
+        Returns:
+            WebElement: The WebElement once it is located and present in the DOM.
         """
         return wait(self.driver, timeout).until(EC.presence_of_element_located(locator))
 
     def elements_are_present(self, locator, timeout=5):
-        """
-        Wait until all elements identified by the locator become present in the DOM of the webpage.
+        """Wait until all elements identified by the locator become present in the DOM of the webpage.
 
-        :param locator: A tuple (By, value) identifying the elements to wait for.
-        :type locator: tuple
-        :param timeout: Maximum time to wait for the elements to become present (default is 5 seconds).
-        :type timeout: int
-        :return: The list of located WebElements once all are present.
-        :rtype: WebElement
+        Args:
+            locator (WebElement): The locator used to find the elements.
+            timeout (int): The maximum amount of time to wait for the elements to be present. Default is 5 seconds.
+
+        Returns:
+            list: A list of WebElements once they are located and present in the DOM.
         """
         return wait(self.driver, timeout).until(EC.presence_of_all_elements_located(locator))
 
     def element_is_not_visible(self, locator, timeout=5):
-        """
-        Wait until the element identified by the locator becomes invisible on the webpage.
+        """Wait until the element identified by the locator becomes invisible on the webpage.
 
-        :param locator: A tuple (By, value) identifying the element to wait for.
-        :type locator: tuple
-        :param timeout: Maximum time to wait for the element to become invisible (default is 5 seconds).
-        :type timeout: int
-        :return: True once the element is invisible.
-        :rtype: WebElement
+        Args:
+            locator (WebElement): The locator used to find the element.
+            timeout (int): The maximum amount of time to wait for the element to be invisible. Default is 5 seconds.
+
+        Returns:
+            bool: True if the element becomes invisible within the timeout, otherwise False.
         """
         return wait(self.driver, timeout).until(EC.invisibility_of_element_located(locator))
 
     def element_is_clickable(self, locator, timeout=5):
-        """
-        Wait until the element identified by the locator becomes clickable on the webpage.
+        """Wait until the element identified by the locator becomes clickable on the webpage.
 
-        :param locator: A tuple (By, value) identifying the element to wait for.
-        :type locator: tuple
-        :param timeout: Maximum time to wait for the element to become clickable (default is 5 seconds).
-        :type timeout: int
-        :return: The located WebElement once it is clickable.
-        :rtype: WebElement
+        Args:
+            locator (WebElement): The locator used to find the element.
+            timeout (int): The maximum amount of time to wait for the element to be clickable. Default is 5 seconds.
+
+        Returns:
+            WebElement: The WebElement once it is located and clickable.
         """
         return wait(self.driver, timeout).until(EC.element_to_be_clickable(locator))
 
     def go_to_element(self, element):
-        """
-        Scroll the webpage to bring the specified element into view.
+        """Scroll the webpage to bring the specified element into view.
 
-        :param element: The WebElement to scroll to.
-        :type element: WebElement
+        Args:
+            element (WebElement): The WebElement to scroll into view.
         """
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
     def action_double_click(self, element):
-        """
+        """Double-click action on the specified element.
 
-        :param element:
-        :return:
+        Args:
+            element (WebElement): The WebElement to double-click on.
         """
         action = ActionChains(self.driver)
         action.double_click(element)
         action.perform()
 
     def action_right_click(self, element):
-        """
+        """Right-click action on the specified element.
 
-        :param element:
-        :return:
+        Args:
+            element (WebElement): The WebElement to right-click on.
         """
         action = ActionChains(self.driver)
         action.context_click(element)
         action.perform()
+
+    def switch_to_alert_window(self):
+        """Switch the WebDriver's focus to the alert window.
+
+        Returns:
+            WebElement: The alert window.
+        """
+        return self.driver.switch_to.alert

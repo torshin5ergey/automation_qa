@@ -1,8 +1,12 @@
+import random
+import time
+
 from pages.base_page import BasePage
-from locators.afw_page_locators import BrowserWindowsPageLocators
+from locators.afw_page_locators import BrowserWindowsPageLocators, AlertsPageLocators
 
 
 class BrowserWindowsPage(BasePage):
+    """https://demoqa.com/browser-windows"""
     locators = BrowserWindowsPageLocators()
 
     def get_new_opened_tab_header(self, open_as='tab'):
@@ -22,3 +26,33 @@ class BrowserWindowsPage(BasePage):
         self.driver.switch_to.window(self.driver.window_handles[-1])
         new_page_header = self.element_is_present(self.locators.NEW_PAGE_HEADER).text
         return new_page_header
+
+
+class AlertsPage(BasePage):
+    """https://demoqa.com/alerts"""
+    locators = AlertsPageLocators()
+
+    def get_alert_text(self, delay=0):
+        if delay == 0:
+            self.element_is_visible(self.locators.SEE_ALERT_BUTTON).click()
+        elif delay > 0:
+            self.element_is_visible(self.locators.APPEAR_IN_5SEC_ALERT_BUTTON).click()
+            time.sleep(delay)
+        alert_window = self.switch_to_alert_window()
+        return alert_window.text
+
+    def get_confirm_alert_text(self):
+        self.element_is_visible(self.locators.CONFIRM_BOX_ALERT_BUTTON).click()
+        alert_window = self.switch_to_alert_window()
+        alert_window.accept()
+        text_result = self.element_is_present(self.locators.CONFIRM_RESULT_TEXT).text
+        return text_result
+
+    def get_prompt_alert_text(self):
+        text = f"autotest{random.randint(0,999)}"
+        self.element_is_visible(self.locators.PROMPT_ALERT_BUTTON).click()
+        alert_window = self.switch_to_alert_window()
+        alert_window.send_keys(text)
+        alert_window.accept()
+        text_result = self.element_is_present(self.locators.PROMPT_RESULT_TEXT).text
+        return text, text_result
