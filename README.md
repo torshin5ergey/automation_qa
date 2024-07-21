@@ -41,18 +41,21 @@ pytest
 
 ```
 $PROJECT_ROOT
-├── data  # Module for storing test data
+├── data  # Test data structures
 │   └── data.py  # Data class definition
-├── generator  # Module for generating test data
-│   └── generator.py  # Script for generating mock data for tests
-├── locators  # Module for storing element locators
+├── generator  # Test mock data generator
+│   └── generator.py  # Mock data generator for tests
+├── locators  # Pages locators
+│   ├── awf_page_locators.py  # Locators for elements in Alerts, Frame & Windows section
 │   ├── elements_page_locators.py  # Locators for elements in Elements section
 │   └── forms_page_locators.py  # Locators for elements in Forms section
-├── pages  # Module for defining page objects
+├── pages  # Page objects
+│   ├── afw_page.py  # Alerts, Frame & Windows page classes
 │   ├── base_page.py  # BasePage class for common page functionalities
-│   ├── element_page.py  # Page classes for pages in Elements section
-│   └── forms_page.py  # Page classes for pages in Forms section
+│   ├── element_page.py  # Elements section page classes
+│   └── forms_page.py  # Forms section page classes
 ├── tests # Module for test cases
+│   ├── afw_test.py  # Test cases for Alerts, Frame & Windows section
 │   ├── elements_test.py  # Test cases for Elements section
 │   └── forms_test.py  # Test cases for Forms section
 ├── conftest.py  # Pytest configuration and fixture definition
@@ -60,12 +63,15 @@ $PROJECT_ROOT
 └── requirements.txt  # Project dependencies
 ```
 - `data`: Test data classes.
-- `generator`: Generating fake data script.
+- `generator`: Fake data generator.
 - `locators`: Web pages element locators.
+  - `afw_page_locators`
   - `elements_page_locators`
   - `forms_page_locators`
 - `pages`: Page objects representing individual web pages.
 - `tests`: Test cases for website objects.
+  - `afw_test.py`: Test cases for Alerts, Frame & Windows pages.
+    - `TestBrowserWindows` **Browser Windows** page test cases.
   - `elements_test.py`: Test cases for Elements pages.
     - `TestTextBox` **Text Box** page test case. It fills all text fields with fake user data and asserts that the filled data matches the expected data for each field.
     - `TestCheckBox` **Check Box** page test case. It toggles all items, selects a random checkboxes, retrieves the checked checkboxes, and asserts that the selected checkboxes match the output result.
