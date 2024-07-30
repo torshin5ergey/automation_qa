@@ -13,3 +13,8 @@ class Person:  # Class to store a variety of a person parameters
     current_address: str = None
     permanent_address: str = None
     phone: str = None
+
+
+@dataclass
+class Color:
+    color_name: list = None

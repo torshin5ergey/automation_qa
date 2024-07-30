@@ -93,6 +93,7 @@ $PROJECT_ROOT
     - `TestFormsPage` **Practice Form** page test case. Generates data and verifies that the form can be correctly filled and submitted.
   - `widgets_test.py`:  Test cases for Widgets section.
     - `TestAccordian`: **Accordian** page test cases. Verifies that the headers and texts of all three sections in the accordion component are correctly displayed and not empty on the accordion page.
+    - `TestAutoComplete`: **Auto Complete** page test cases. contains tests for verifying the addition and removal of multiple colors in a multi-select autocomplete field, and the addition of a single color in a single-select autocomplete field on the autocomplete page.
 - `conftest.py`: Pytest configuration file and fixture definitions.
 - `requirements.txt`: Project dependencies.
 

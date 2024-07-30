@@ -1,8 +1,7 @@
 import random
 from pathlib import Path
 from faker import Faker
-from data.data import Person
-
+from data.data import Person, Color
 
 faker_ru = Faker('ru_RU')  # Faker object configured for Russian language
 Faker.seed()  # Generating seed for Faker to ensure consistent fake data
@@ -42,3 +41,9 @@ def generate_file(ext):
     else:
         f = open(test_file_path, 'w+', encoding='utf-8')
     return f.name, test_file_path
+
+
+def generate_color():
+    yield Color(
+        color_name=["Red", "Blue", "Green", "Yellow", "Purple", "Black", "White", "Voilet", "Indigo", "Magenta", "Aqua"]
+    )
