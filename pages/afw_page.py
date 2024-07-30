@@ -2,7 +2,7 @@ import random
 import time
 
 from pages.base_page import BasePage
-from locators.afw_page_locators import BrowserWindowsPageLocators, AlertsPageLocators
+from locators.afw_page_locators import BrowserWindowsPageLocators, AlertsPageLocators, FramesPageLocators
 
 
 class BrowserWindowsPage(BasePage):
@@ -56,3 +56,21 @@ class AlertsPage(BasePage):
         alert_window.accept()
         text_result = self.element_is_present(self.locators.PROMPT_RESULT_TEXT).text
         return text, text_result
+
+
+class FramesPage(BasePage):
+    """https://demoqa.com/frames"""
+    locators = FramesPageLocators()
+
+    def check_frame_num(self, frame_num):
+        frame_locators = {
+            'frame1': self.locators.FIRST_FRAME_IFRAME,
+            'frame2': self.locators.SECOND_FRAME_IFRAME,
+        }
+        frame = self.element_is_present(frame_locators[frame_num])
+        frame_width = frame.get_attribute('width')
+        frame_height = frame.get_attribute('height')
+        self.driver.switch_to.frame(frame)
+        text = self.element_is_present(self.locators.FRAME_TITLE_HEADER).text
+        self.driver.switch_to.default_content()
+        return text, frame_width, frame_height

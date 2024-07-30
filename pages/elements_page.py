@@ -75,7 +75,8 @@ class CheckBoxPage(BasePage):  # https://demoqa.com/checkbox
         repeats = 21  # Loop repeats
         # Random items selecting loop
         while repeats != 0:
-            item = item_list[random.randint(1, len(item_list))]  # Select random item
+            random_list_item = random.randint(0, len(item_list)-1)
+            item = item_list[random_list_item]  # Select random item
             if repeats > 0:
                 self.go_to_element(item)  # Scrolling to the selected checkbox
                 item.click()
