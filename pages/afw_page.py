@@ -3,7 +3,7 @@ import time
 
 from pages.base_page import BasePage
 from locators.afw_page_locators import BrowserWindowsPageLocators, AlertsPageLocators, FramesPageLocators, \
-    NestedFramesPageLocators
+    NestedFramesPageLocators, ModalDialogsPageLocators
 
 
 class BrowserWindowsPage(BasePage):
@@ -122,4 +122,35 @@ class NestedFramesPage(BasePage):
         child_frame = self.element_is_present(self.locators.CHILD_FRAME_IFRAME)
         self.driver.switch_to.frame(child_frame)
         child_frame_text = self.element_is_present(self.locators.CHILD_FRAME_TEXT).text
+
         return parent_frame_text, child_frame_text
+
+
+class ModalDialogsPage(BasePage):
+    """https://demoqa.com/modal-dialogs"""
+    locators = ModalDialogsPageLocators()
+
+    def get_modal_data(self, modal_name):
+        """Get the title and text of a specified modal.
+
+        Args:
+            modal_name (str): The name of the modal ('small' or 'large').
+
+        Returns:
+            tuple: The title and text of the specified modal.
+        """
+        modal_locators = {
+            'small': (self.locators.SMALL_MODAL_BUTTON,
+                      self.locators.SMALL_MODAL_TITLE,
+                      self.locators.SMALL_MODAL_TEXT,
+                      self.locators.SMALL_MODAL_CLOSE_BUTTON),
+            'large': (self.locators.LARGE_MODAL_BUTTON,
+                      self.locators.LARGE_MODAL_TITLE,
+                      self.locators.LARGE_MODAL_TEXT,
+                      self.locators.LARGE_MODAL_CLOSE_BUTTON),
+        }
+        self.element_is_visible(modal_locators[modal_name][0]).click()
+        modal_title = self.element_is_visible(modal_locators[modal_name][1]).text
+        modal_text = self.element_is_visible(modal_locators[modal_name][2]).text
+        self.element_is_visible(modal_locators[modal_name][3]).click()
+        return modal_title, modal_text
