@@ -23,6 +23,7 @@ class BasePage:
         Returns:
             WebElement: The WebElement once it is located and visible.
         """
+        self.go_to_element(self.element_is_present(locator))
         return wait(self.driver, timeout).until(EC.visibility_of_element_located(locator))
 
     def elements_are_visible(self, locator, timeout=5):

@@ -48,16 +48,19 @@ $PROJECT_ROOT
 ├── locators  # Pages locators
 │   ├── awf_page_locators.py  # Locators for elements in Alerts, Frame & Windows section
 │   ├── elements_page_locators.py  # Locators for elements in Elements section
-│   └── forms_page_locators.py  # Locators for elements in Forms section
+│   ├── forms_page_locators.py  # Locators for elements in Forms section
+│   └── widgets_page_locators.py  # Locators for elements in Widgets section
 ├── pages  # Page objects
 │   ├── afw_page.py  # Alerts, Frame & Windows page classes
 │   ├── base_page.py  # BasePage class for common page functionalities
 │   ├── element_page.py  # Elements section page classes
-│   └── forms_page.py  # Forms section page classes
+│   ├── forms_page.py  # Forms section page classes
+│   └── widgets_page.py  # Widgets section page classes
 ├── tests # Module for test cases
 │   ├── afw_test.py  # Test cases for Alerts, Frame & Windows section
 │   ├── elements_test.py  # Test cases for Elements section
-│   └── forms_test.py  # Test cases for Forms section
+│   ├── forms_test.py  # Test cases for Forms section
+│   └── widgets_test.py  # Test cases for Widgets section
 ├── conftest.py  # Pytest configuration and fixture definition
 ├── README.md  # This README file
 └── requirements.txt  # Project dependencies
@@ -68,6 +71,7 @@ $PROJECT_ROOT
   - `afw_page_locators`
   - `elements_page_locators`
   - `forms_page_locators`
+  - `widgets_page_locators`
 - `pages`: Page objects representing individual web pages.
 - `tests`: Test cases for website objects.
   - `afw_test.py`: Test cases for Alerts, Frame & Windows pages.
@@ -87,6 +91,8 @@ $PROJECT_ROOT
     - `TestDynamicProperties` **Dynamic Properties** page test case. It contains: The "Enable After 5 Seconds" button becomes clickable within a timeout, The color of the "Color Change" button changes after a 5 seconds delay, The "Visible After 5 Seconds" button becomes visible after a 5 seconds delay. *This tests may not work correctly with the `webdriver_manager` library, because in that case the test startup will be much later than the change of dynamic properties.*
   - `forms_test.py`: Test cases for Practice Form in Forms section.
     - `TestFormsPage` **Practice Form** page test case. Generates data and verifies that the form can be correctly filled and submitted.
+  - `widgets_test.py`:  Test cases for Widgets section.
+    - `TestAccordian`: **Accordian** page test cases. Verifies that the headers and texts of all three sections in the accordion component are correctly displayed and not empty on the accordion page.
 - `conftest.py`: Pytest configuration file and fixture definitions.
 - `requirements.txt`: Project dependencies.
 
