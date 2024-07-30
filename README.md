@@ -72,7 +72,9 @@ $PROJECT_ROOT
 - `tests`: Test cases for website objects.
   - `afw_test.py`: Test cases for Alerts, Frame & Windows pages.
     - `TestBrowserWindows` **Browser Windows** page test cases. Both tests assert the header to confirm that the new tab or window has opened correctly and displays the
-    - `TestAlerts` **Alerts** page test cases. 
+    - `TestAlerts` **Alerts** page test cases. Checking the text of a normal alert, a delayed alert appearing after 6 seconds, and a confirmation box alert with input
+    - `TestFrames` **Frames** page test cases. Verifying the content and dimensions of two frames on the page.
+    - `TestNestedFrames` *Nested Frames* page test cases. Includes a test for verifying the text content within both the parent and child frames on the nested frames page.
   - `elements_test.py`: Test cases for Elements pages.
     - `TestTextBox` **Text Box** page test case. It fills all text fields with fake user data and asserts that the filled data matches the expected data for each field.
     - `TestCheckBox` **Check Box** page test case. It toggles all items, selects a random checkboxes, retrieves the checked checkboxes, and asserts that the selected checkboxes match the output result.
