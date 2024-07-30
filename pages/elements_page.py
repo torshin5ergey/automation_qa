@@ -34,10 +34,11 @@ class TextBoxPage(BasePage):  # https://demoqa.com/text-box
         email = person_info.email
         current_address = person_info.current_address
         permanent_address = person_info.permanent_address
-        self.element_is_visible(self.locators.FULL_NAME, ).send_keys(full_name)
+        self.element_is_visible(self.locators.FULL_NAME).send_keys(full_name)
         self.element_is_visible(self.locators.EMAIL).send_keys(email)
         self.element_is_visible(self.locators.CURRENT_ADDRESS).send_keys(current_address)
         self.element_is_visible(self.locators.PERMANENT_ADDRESS).send_keys(permanent_address)
+        self.go_to_element(self.element_is_present(self.locators.SUBMIT))
         self.element_is_visible(self.locators.SUBMIT).click()
         return full_name, email, current_address, permanent_address
 
@@ -421,6 +422,7 @@ class LinksPage(BasePage):  # https://demoqa.com/links
         request = requests.get(url)
         if request.status_code == expected_code:
             try:
+                self.go_to_element(self.element_is_present(buttons[expected_code]))
                 self.element_is_present(buttons[expected_code]).click()
             except Exception as e:
                 return f"Error clicking link: {str(e)}."
