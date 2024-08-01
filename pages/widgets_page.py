@@ -6,7 +6,7 @@ from selenium.webdriver import Keys
 
 from generator.generator import generate_color, generate_date
 from locators.widgets_page_locators import AccordianPageLocators, AutocompletePageLocators, DatePickerPageLocators, \
-    SliderPageLocators
+    SliderPageLocators, ProgressBarPageLocators
 from pages.base_page import BasePage
 
 
@@ -171,8 +171,19 @@ class SliderPage(BasePage):
         slider_input = self.element_is_visible(self.locators.SLIDER_INPUT)
         self.action_drag_and_drop_by_offset(slider_input, random.randint(1, 100), 0)
         value_after = self.element_is_visible(self.locators.SLIDER_VALUE_INPUT).get_attribute('value')
-        assert value_before != value_after, "Error. The slider value has not been changed."
+        return value_before, value_after
 
 
 class ProgressBarPage(BasePage):
-    pass
+    locators = ProgressBarPageLocators()
+
+    def start_stop_progressbar(self):
+        value_before = self.element_is_present(self.locators.PROGRESSBAR_VALUE_INPUT).text
+
+        progressbar = self.element_is_clickable(self.locators.PROGRESSBAR_START_STOP_BUTTON)
+        progressbar.click()
+        time.sleep(random.randint(1, 5))
+        progressbar.click()
+
+        value_after = self.element_is_present(self.locators.PROGRESSBAR_VALUE_INPUT).text
+        return value_before, value_after

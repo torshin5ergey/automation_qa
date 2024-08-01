@@ -96,6 +96,7 @@ $PROJECT_ROOT
     - `TestAutoComplete`: **Auto Complete** page test cases. Contains tests for verifying the addition and removal of multiple colors in a multi-select autocomplete field, and the addition of a single color in a single-select autocomplete field on the autocomplete page.
     - `TestDatePicker` **Date Picker** page test cases. Contains date and datetime select tests.
     - `TestSlider` **Slider** page test cases. Contains drag'n'drop slider action.
+    - `TestProgressBar` **Progress Bar** page test cases.
 - `conftest.py`: Pytest configuration file and fixture definitions.
 - `requirements.txt`: Project dependencies.
 
