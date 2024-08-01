@@ -1,8 +1,9 @@
 import random
 import time
 
+import generator.generator
 from conftest import driver
-from pages.widgets_page import AccordianPage, AutocompletePage
+from pages.widgets_page import AccordianPage, AutocompletePage, DatePickerPage
 
 
 class TestWidgets:
@@ -39,7 +40,15 @@ class TestAutoComplete:
         before, after = autocomplete_page.remove_value_multi(num=colors_count-1)
         assert after == 1 and before != after, "Error. Values has not been deleted from input."
 
-    # TODO: test delete all
+    def test_clear_values_multi(self, driver):
+        autocomplete_page = AutocompletePage(driver, "https://demoqa.com/auto-complete")
+        autocomplete_page.open()
+
+        colors_count = random.randint(1, 11)
+        selected_colors = autocomplete_page.add_value_multi(num=colors_count)
+        autocomplete_page.clear_all_multi()
+        result_colors = autocomplete_page.get_current_multi_selection()
+        assert len(selected_colors) != 0 and len(result_colors) == 0, "Error. The values has not been cleared."
 
     def test_autocomplete_single(self, driver):
         autocomplete_page = AutocompletePage(driver, "https://demoqa.com/auto-complete")
@@ -48,3 +57,19 @@ class TestAutoComplete:
         selected_color = autocomplete_page.add_value_single()
         result_color = autocomplete_page.get_current_single_selection()
         assert selected_color == result_color, "Error. Selected color is missing in the input."
+
+
+class TestDatePicker:
+    def test_select_date(self, driver):
+        datepicker_page = DatePickerPage(driver, "https://demoqa.com/date-picker")
+        datepicker_page.open()
+
+        before, after = datepicker_page.set_date()
+        assert before != after, "Error. Date has not been changed."
+
+    def test_select_datetime(self, driver):
+        datepicker_page = DatePickerPage(driver, "https://demoqa.com/date-picker")
+        datepicker_page.open()
+
+        before, after = datepicker_page.set_datetime()
+        assert before != after, "Error. Date and time has not been changed."

@@ -18,3 +18,11 @@ class Person:  # Class to store a variety of a person parameters
 @dataclass
 class Color:
     color_name: list = None
+
+
+@dataclass
+class Date:
+    day: str = None
+    month: str = None
+    year: str = None
+    time: str = None

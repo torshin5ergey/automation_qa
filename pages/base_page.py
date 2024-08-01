@@ -1,4 +1,5 @@
 from selenium.webdriver import ActionChains
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -121,3 +122,26 @@ class BasePage:
             WebElement: The alert window.
         """
         return self.driver.switch_to.alert
+
+    def set_date_by_text(self, element, date: str):
+        """Selects a date from a dropdown by visible text.
+
+        Args:
+            element (WebElement): The locator for the dropdown element.
+            date (str): The visible text of the option to select.
+        """
+        select = Select(self.element_is_present(element))
+        select.select_by_visible_text(date)
+
+    def set_date_item_from_list(self, element, item):
+        """Selects an item from a list of elements.
+
+        Args:
+            element: The locator for the list of elements.
+            item (str): The item to select.
+        """
+        item_list = self.elements_are_present(element)
+        for i in item_list:
+            if i.text == item:
+                i.click()
+                break

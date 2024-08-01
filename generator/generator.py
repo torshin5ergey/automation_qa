@@ -1,9 +1,11 @@
+from datetime import datetime
 import random
 from pathlib import Path
 from faker import Faker
-from data.data import Person, Color
+from data.data import Person, Color, Date
 
 faker_ru = Faker('ru_RU')  # Faker object configured for Russian language
+faker_en = Faker('En')  # Faker object configured for English data
 Faker.seed()  # Generating seed for Faker to ensure consistent fake data
 
 
@@ -46,4 +48,21 @@ def generate_file(ext):
 def generate_color():
     yield Color(
         color_name=["Red", "Blue", "Green", "Yellow", "Purple", "Black", "White", "Voilet", "Indigo", "Magenta", "Aqua"]
+    )
+
+
+def generate_random_time():
+    hours = random.randint(0, 23)
+    minutes = random.choice([0, 15, 30, 45])
+    time = str(hours).rjust(2, '0') + ':' + str(minutes).rjust(2, '0')
+    return time
+
+
+def generate_date():
+    yield Date(
+        #year=faker_en.year(),
+        year=str(random.randint(-4, 4) + datetime.now().year),
+        month=faker_en.month_name(),
+        day=faker_en.day_of_month(),
+        time=generate_random_time()
     )
