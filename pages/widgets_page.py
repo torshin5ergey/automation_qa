@@ -5,7 +5,8 @@ from selenium.common import TimeoutException
 from selenium.webdriver import Keys
 
 from generator.generator import generate_color, generate_date
-from locators.widgets_page_locators import AccordianPageLocators, AutocompletePageLocators, DatePickerPageLocators
+from locators.widgets_page_locators import AccordianPageLocators, AutocompletePageLocators, DatePickerPageLocators, \
+    SliderPageLocators
 from pages.base_page import BasePage
 
 
@@ -160,3 +161,18 @@ class DatePickerPage(BasePage):
 
         date_after = input_date.get_attribute('value')
         return date_before, date_after
+
+
+class SliderPage(BasePage):
+    locators = SliderPageLocators()
+
+    def change_slider_value(self):
+        value_before = self.element_is_visible(self.locators.SLIDER_VALUE_INPUT).get_attribute('value')
+        slider_input = self.element_is_visible(self.locators.SLIDER_INPUT)
+        self.action_drag_and_drop_by_offset(slider_input, random.randint(1, 100), 0)
+        value_after = self.element_is_visible(self.locators.SLIDER_VALUE_INPUT).get_attribute('value')
+        assert value_before != value_after, "Error. The slider value has not been changed."
+
+
+class ProgressBarPage(BasePage):
+    pass

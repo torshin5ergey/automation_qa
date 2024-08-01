@@ -39,3 +39,10 @@ class DatePickerPageLocators:
     DATETIME_SELECT_TIME_LIST = (By.CSS_SELECTOR, 'li[class="react-datepicker__time-list-item "]')
     DATETIME_SELECT_DAY = (By.CSS_SELECTOR, 'div[class^="react-datepicker__day react-datepicker__day--"]')
 
+
+class SliderPageLocators:
+    SLIDER_INPUT = (By.CSS_SELECTOR, 'input[class="range-slider range-slider--primary"]')
+    SLIDER_VALUE_INPUT = (By.CSS_SELECTOR, 'input[id="sliderValue"]')
+
+class ProgressBarPageLocators:
+    pass
