@@ -6,7 +6,7 @@ from selenium.webdriver import Keys
 
 from generator.generator import generate_color, generate_date
 from locators.widgets_page_locators import AccordianPageLocators, AutocompletePageLocators, DatePickerPageLocators, \
-    SliderPageLocators, ProgressBarPageLocators
+    SliderPageLocators, ProgressBarPageLocators, TabsPagelocators, ToolTipsPageLocators
 from pages.base_page import BasePage
 
 
@@ -167,6 +167,12 @@ class SliderPage(BasePage):
     locators = SliderPageLocators()
 
     def change_slider_value(self):
+        """Changes the value of a slider and retrieves its value before and after the change.
+
+        Returns:
+            tuple: A tuple containing the slider value before and after the change.
+
+        """
         value_before = self.element_is_visible(self.locators.SLIDER_VALUE_INPUT).get_attribute('value')
         slider_input = self.element_is_visible(self.locators.SLIDER_INPUT)
         self.action_drag_and_drop_by_offset(slider_input, random.randint(1, 100), 0)
@@ -178,6 +184,11 @@ class ProgressBarPage(BasePage):
     locators = ProgressBarPageLocators()
 
     def start_stop_progressbar(self):
+        """Starts and stops the progress bar, then retrieves its value before and after.
+
+        Returns:
+            tuple: A tuple containing the progress bar value before and after the operation.
+        """
         value_before = self.element_is_present(self.locators.PROGRESSBAR_VALUE_INPUT).text
 
         progressbar = self.element_is_clickable(self.locators.PROGRESSBAR_START_STOP_BUTTON)
@@ -187,3 +198,67 @@ class ProgressBarPage(BasePage):
 
         value_after = self.element_is_present(self.locators.PROGRESSBAR_VALUE_INPUT).text
         return value_before, value_after
+
+
+class TabsPage(BasePage):
+    """https://demoqa.com/tabs"""
+    locators = TabsPagelocators()
+
+    def get_tab_content(self, tab):
+        """Clicks on a specified tab and retrieves the text content of that tab, along with the length of the content.
+
+        Args:
+            tab (str): The tab to retrieve content from. Options include 'What', 'Origin', 'Use', and 'More'.
+
+        Returns:
+            tuple: A tuple containing the text of the tab button and the length of the tab content.
+        """
+        tab_locators = {
+            'What': (self.locators.TABS_WHAT, self.locators.TABS_WHAT_CONTENT),
+            'Origin': (self.locators.TABS_ORIGIN, self.locators.TABS_ORIGIN_CONTENT),
+            'Use': (self.locators.TABS_USE, self.locators.TABS_USE_CONTENT),
+            'More': (self.locators.TABS_MORE, self.locators.TABS_MORE_CONTENT),
+        }
+        tab_button = self.element_is_visible(tab_locators[tab][0])
+        tab_button.click()
+        tab_content = self.element_is_visible(tab_locators[tab][1]).text
+        return tab_button.text, len(tab_content)
+
+
+class ToolTipsPage(BasePage):
+    """https://demoqa.com/tool-tips"""
+    locators = ToolTipsPageLocators()
+
+    def get_tooltip_text(self, hover_to):
+        """Hovers over a specified element to trigger its tooltip and then retrieves the tooltip text.
+
+        Args:
+            hover_to (str): The element to hover over. Options include 'Button', 'Field', 'Contrary', and 'Section'.
+
+        Returns:
+            str: The text of the tooltip.
+        """
+        hover_locators = {
+            'Button': {
+                'element': self.locators.HOVER_BUTTON,
+                'tooltip': self.locators.HOVER_TOOLTIP_BUTTON
+            },
+            'Field': {
+                'element': self.locators.HOVER_FIELD_INPUT,
+                'tooltip': self.locators.HOVER_FIELD_TOOLTIP_INPUT
+            },
+            'Contrary': {
+                'element': self.locators.HOVER_CONTRARY_LINK,
+                'tooltip': self.locators.HOVER_CONTRARY_TOOLTIP_LINK
+            },
+            'Section': {
+                'element': self.locators.HOVER_SECTION_LINK,
+                'tooltip': self.locators.HOVER_SECTION_TOOLTIP_LINK
+            },
+        }
+        element = self.element_is_present(hover_locators[hover_to]['element'])
+        self.action_move_to_element(element)
+        time.sleep(2)
+        self.element_is_visible(hover_locators[hover_to]['tooltip'])
+        tooltip_text = self.element_is_visible(self.locators.TOOLTIP_INNER_DIV).text
+        return tooltip_text

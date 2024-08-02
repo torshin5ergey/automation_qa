@@ -48,3 +48,30 @@ class SliderPageLocators:
 class ProgressBarPageLocators:
     PROGRESSBAR_START_STOP_BUTTON = (By.CSS_SELECTOR, 'button[id="startStopButton"]')
     PROGRESSBAR_VALUE_INPUT = (By.CSS_SELECTOR, 'div[class="progress-bar bg-info"]')
+
+
+class TabsPagelocators:
+    TABS_WHAT = (By.CSS_SELECTOR, 'a[id="demo-tab-what"]')
+    TABS_WHAT_CONTENT = (By.CSS_SELECTOR, 'div[id="demo-tabpane-what"]')
+    TABS_ORIGIN = (By.CSS_SELECTOR, 'a[id="demo-tab-origin"]')
+    TABS_ORIGIN_CONTENT = (By.CSS_SELECTOR, 'div[id="demo-tabpane-origin"]')
+    TABS_USE = (By.CSS_SELECTOR, 'a[id="demo-tab-use"]')
+    TABS_USE_CONTENT = (By.CSS_SELECTOR, 'div[id="demo-tabpane-use"]')
+    TABS_MORE = (By.CSS_SELECTOR, 'a[id="demo-tab-more"]')
+    TABS_MORE_CONTENT = (By.CSS_SELECTOR, 'div[id="demo-tabpane-more"]')
+
+
+class ToolTipsPageLocators:
+    TOOLTIP_INNER_DIV = (By.CSS_SELECTOR, 'div[class="tooltip-inner"]')
+    # Button
+    HOVER_BUTTON = (By.CSS_SELECTOR, 'button[id="toolTipButton"]')
+    HOVER_TOOLTIP_BUTTON = (By.CSS_SELECTOR, 'button[aria-describedby="buttonToolTip"]')
+    # Text field
+    HOVER_FIELD_INPUT = (By.CSS_SELECTOR, 'input[id="toolTipTextField"]')
+    HOVER_FIELD_TOOLTIP_INPUT = (By.CSS_SELECTOR, 'input[aria-describedby="textFieldToolTip"]')
+    # Link Contrary
+    HOVER_CONTRARY_LINK = (By.XPATH, '//*[.="Contrary"]')
+    HOVER_CONTRARY_TOOLTIP_LINK = (By.CSS_SELECTOR, 'a[aria-describedby="contraryTexToolTip"]')
+    # Link 1.10.32
+    HOVER_SECTION_LINK = (By.XPATH, '//*[.="1.10.32"]')
+    HOVER_SECTION_TOOLTIP_LINK = (By.CSS_SELECTOR, 'a[aria-describedby="sectionToolTip"]')

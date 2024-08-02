@@ -147,6 +147,23 @@ class BasePage:
                 break
 
     def action_drag_and_drop_by_offset(self, element, x_coords, y_coords):
+        """Drags an element and drops it by the specified offset.
+
+        Args:
+            element: The web element to be dragged.
+            x_coords (int): The horizontal offset by which to drag the element.
+            y_coords (int): The vertical offset by which to drag the element.
+        """
         action = ActionChains(self.driver)
         action.drag_and_drop_by_offset(element, x_coords, y_coords)
+        action.perform()
+
+    def action_move_to_element(self, element):
+        """Moves the mouse pointer to the center of the specified element.
+
+        Args:
+            element: The web element to move the mouse pointer to.
+        """
+        action = ActionChains(self.driver)
+        action.move_to_element(element)
         action.perform()

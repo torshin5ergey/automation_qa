@@ -3,7 +3,8 @@ import time
 
 import generator.generator
 from conftest import driver
-from pages.widgets_page import AccordianPage, AutocompletePage, DatePickerPage, SliderPage, ProgressBarPage
+from pages.widgets_page import AccordianPage, AutocompletePage, DatePickerPage, SliderPage, ProgressBarPage, TabsPage, \
+    ToolTipsPage
 
 
 class TestWidgets:
@@ -91,3 +92,30 @@ class TestProgressBar:
 
         before, after = progressbar_page.start_stop_progressbar()
         assert before != after, "Error. The progress bar value has not been changed."
+
+
+class TestTabs:
+    def test_tabs(self, driver):
+        tabs_page = TabsPage(driver, "https://demoqa.com/tabs")
+        tabs_page.open()
+
+        tabs = [('What', 574), ('Origin', 1059), ('Use', 613)]
+        for tab in tabs:
+            tab_name, tab_content = tabs_page.get_tab_content(tab[0])
+            assert tab_content == tab[1], f"Error. The {tab[0]} was not clicked or the content is empty."
+
+
+class TestToolTips:
+    def test_tooltips(self, driver):
+        tooltips_page = ToolTipsPage(driver, "https://demoqa.com/tool-tips")
+        tooltips_page.open()
+
+        button_text = tooltips_page.get_tooltip_text('Button')
+        field_text = tooltips_page.get_tooltip_text('Field')
+        contrary_text = tooltips_page.get_tooltip_text('Contrary')
+        section_text = tooltips_page.get_tooltip_text('Section')
+
+        assert button_text == "You hovered over the Button", "Error. Button hover missing or incorrect content."
+        assert field_text == "You hovered over the text field", "Error. Text field hover missing or incorrect content."
+        assert contrary_text == "You hovered over the Contrary", "Error. Contrary link hover missing or incorrect content."
+        assert section_text == "You hovered over the 1.10.32",  "Error. Section link hover missing or incorrect content."
