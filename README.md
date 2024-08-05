@@ -72,11 +72,6 @@ $PROJECT_ROOT
 - `data`: Test data classes.
 - `generator`: Fake data generator.
 - `locators`: Web pages element locators.
-  - `afw_page_locators`
-  - `elements_page_locators`
-  - `forms_page_locators`
-  - `interactions_page_locators`
-  - `widgets_page_locators`
 - `pages`: Page objects representing individual web pages.
 - `tests`: Test cases for website objects.
   - `afw_test.py`: Test cases for Alerts, Frame & Windows pages.
@@ -97,7 +92,9 @@ $PROJECT_ROOT
   - `forms_test.py`: Test cases for Practice Form in Forms section.
     - `TestFormsPage` **Practice Form** page test case. Generates data and verifies that the form can be correctly filled and submitted.
   - `interactions_test.py`: Test cases for Interactions section.
-    - `TestSortable`: **Sortable** page test cases. Verifies that the list and grid elements can be shuffled. 
+    - `TestSortable`: **Sortable** page test cases. Verifies that the list and grid elements can be shuffled.
+    - `TestSelectable`: **Selectable** page test cases. Verifies that the correct number of list and grid items are selected.
+    - `TestResizable`: **Resizable** page test cases. Verifies that the resizable elements (w/ constraints and w/o) correctly resizes to the maximum and minimum specified sizes.
   - `widgets_test.py`:  Test cases for Widgets section.
     - `TestAccordian`: **Accordian** page test cases. Verifies that the headers and texts of all three sections in the accordion component are correctly displayed and not empty on the accordion page.
     - `TestAutoComplete`: **Auto Complete** page test cases. Contains tests for verifying the addition and removal of multiple colors in a multi-select autocomplete field, and the addition of a single color in a single-select autocomplete field on the autocomplete page.
