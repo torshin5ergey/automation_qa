@@ -75,3 +75,7 @@ class ToolTipsPageLocators:
     # Link 1.10.32
     HOVER_SECTION_LINK = (By.XPATH, '//*[.="1.10.32"]')
     HOVER_SECTION_TOOLTIP_LINK = (By.CSS_SELECTOR, 'a[aria-describedby="sectionToolTip"]')
+
+
+class MenuPageLocators:
+    MENU_ITEM_LIST = (By.CSS_SELECTOR, 'ul[id="nav"] li a')

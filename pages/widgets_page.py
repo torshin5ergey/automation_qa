@@ -6,7 +6,7 @@ from selenium.webdriver import Keys
 
 from generator.generator import generate_color, generate_date
 from locators.widgets_page_locators import AccordianPageLocators, AutocompletePageLocators, DatePickerPageLocators, \
-    SliderPageLocators, ProgressBarPageLocators, TabsPagelocators, ToolTipsPageLocators
+    SliderPageLocators, ProgressBarPageLocators, TabsPagelocators, ToolTipsPageLocators, MenuPageLocators
 from pages.base_page import BasePage
 
 
@@ -262,3 +262,17 @@ class ToolTipsPage(BasePage):
         self.element_is_visible(hover_locators[hover_to]['tooltip'])
         tooltip_text = self.element_is_visible(self.locators.TOOLTIP_INNER_DIV).text
         return tooltip_text
+
+
+class MenuPage(BasePage):
+    """https://demoqa.com/menu"""
+    locators = MenuPageLocators()
+
+    def get_menu_items(self):
+        """Return a list of text from all menu items on the page."""
+        menu = self.elements_are_present(self.locators.MENU_ITEM_LIST)
+        data = []
+        for item in menu:
+            self.action_move_to_element(item)
+            data.append(item.text)
+        return data

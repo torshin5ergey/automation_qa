@@ -4,7 +4,7 @@ import time
 import generator.generator
 from conftest import driver
 from pages.widgets_page import AccordianPage, AutocompletePage, DatePickerPage, SliderPage, ProgressBarPage, TabsPage, \
-    ToolTipsPage
+    ToolTipsPage, MenuPage
 
 
 class TestWidgets:
@@ -84,6 +84,7 @@ class TestSlider:
         before, after = slider_page.change_slider_value()
         assert before != after, "Error. The slider value has not been changed."
 
+    # TODO: test change value with input
 
 class TestProgressBar:
     def test_start_stop_progressbar(self, driver):
@@ -93,6 +94,7 @@ class TestProgressBar:
         before, after = progressbar_page.start_stop_progressbar()
         assert before != after, "Error. The progress bar value has not been changed."
 
+    # TODO: reset button on 100%
 
 class TestTabs:
     def test_tabs(self, driver):
@@ -119,3 +121,14 @@ class TestToolTips:
         assert field_text == "You hovered over the text field", "Error. Text field hover missing or incorrect content."
         assert contrary_text == "You hovered over the Contrary", "Error. Contrary link hover missing or incorrect content."
         assert section_text == "You hovered over the 1.10.32",  "Error. Section link hover missing or incorrect content."
+
+
+class TestMenu:
+    def test_menu(self, driver):
+        menu_page = MenuPage(driver, "https://demoqa.com/menu")
+        menu_page.open()
+
+        data = menu_page.get_menu_items()
+        assert len(data) == 8 and "" not in data, "Error. The menu is incomplete or has empty elements in it."
+
+# TODO: https://demoqa.com/select-menu

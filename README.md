@@ -99,6 +99,7 @@ $PROJECT_ROOT
     - `TestProgressBar` **Progress Bar** page test case. Verifies that the progress bar value changes after starting and stopping it.
     - `TestTabs` **Tabs** page test case. Checks that the tabs on the page open correctly and contain the expected amount of text.
     - `TestToolTips` **Tool Tips** page test case. Ensures that tooltips display the correct text when hovering over various elements on the page.
+    - `TestMenu` **Menu** page test case. Verifies that the menu on the demo page contains exactly 8 non-empty items.
 - `conftest.py`: Pytest configuration file and fixture definitions.
 - `requirements.txt`: Project dependencies.
 
