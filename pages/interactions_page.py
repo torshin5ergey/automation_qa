@@ -1,7 +1,8 @@
 import time
 import random
 
-from locators.interactions_page_locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators
+from locators.interactions_page_locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators, \
+    DroppablePageLocators
 from pages.base_page import BasePage
 
 
@@ -33,11 +34,11 @@ class SortablePage(BasePage):
         """
         sortable_locators = {
             "list": {
-                "tab": self.locators.LIST_TAB_A,
+                "tab": self.locators.LIST_TAB,
                 "items": self.locators.LIST_ITEMS
             },
             "grid": {
-                "tab": self.locators.GRID_TAB_A,
+                "tab": self.locators.GRID_TAB,
                 "items": self.locators.GRID_ITEMS
             },
         }
@@ -79,12 +80,12 @@ class SelectablePage(BasePage):
         """
         selectable_locators = {
             "list": {
-                "tab": self.locators.LIST_TAB_A,
+                "tab": self.locators.LIST_TAB,
                 "items": self.locators.LIST_ITEMS,
                 "active_items": self.locators.LIST_ITEMS_ACTIVE,
             },
             "grid": {
-                "tab": self.locators.GRID_TAB_A,
+                "tab": self.locators.GRID_TAB,
                 "items": self.locators.GRID_ITEMS,
                 "active_items": self.locators.GRID_ITEMS_ACTIVE,
             },
@@ -166,3 +167,102 @@ class ResizablePage(BasePage):
 
         return max_size, min_size
 
+
+class DroppablePage(BasePage):
+    """https://demoqa.com/droppable"""
+    locators = DroppablePageLocators()
+
+    def drop_simple(self):
+        """Drag and drop operation and return the text of the drop target.
+
+        Returns:
+            str: The text of the drop target after the drag and drop operation.
+        """
+        self.element_is_visible(self.locators.SIMPLE_TAB).click()
+        drag_div = self.element_is_visible(self.locators.SIMPLE_DRAGGABLE)
+        drop_div = self.element_is_visible(self.locators.SIMPLE_DROPPABLE)
+        self.action_drag_and_drop_to_element(drag_div, drop_div)
+        return drop_div.text
+
+    def drop_accept(self):
+        """Drag and drop operations with both acceptable and non-acceptable elements,
+        and return the text of the drop target for each case.
+
+        Returns:
+            tuple: A tuple containing the text of the drop target after dragging the non-acceptable
+            and acceptable elements, respectively.
+        """
+        self.element_is_visible(self.locators.ACCEPT_TAB).click()
+        drag_acceptable_div = self.element_is_visible(self.locators.ACCEPT_ACCEPTABLE_DRAGGABLE)
+        drag_not_acceptable_div = self.element_is_visible(self.locators.ACCEPT_NOT_ACCEPTABLE_DRAGGABLE)
+        drop_div = self.element_is_visible(self.locators.ACCEPT_DROPPABLE)
+        # Move not acceptable
+        self.action_drag_and_drop_to_element(drag_not_acceptable_div, drop_div)
+        drop_not_acceptable_text = drop_div.text
+        # Move acceptable
+        self.action_drag_and_drop_to_element(drag_acceptable_div, drop_div)
+        drop_acceptable_text = drop_div.text
+
+        return drop_not_acceptable_text, drop_acceptable_text
+
+    def drop_prevent_propagation(self, element):
+        """Drag and drop operation in the 'Prevent Propagation' scenario,
+        and return the text of both the inner and outer drop targets.
+
+        Args:
+            element (str): Specifies whether to interact with the 'greedy' or 'not_greedy' elements.
+
+        Returns:
+            tuple: A tuple containing the text of the inner and outer drop targets after the drag and drop operation.
+        """
+        pp_locators = {
+            "greedy": {
+                "outer_box": self.locators.GREEDY_OUTER_DROPPABLE,
+                "outer_text": self.locators.GREEDY_OUTER_DROPPABLE_TEXT,
+                "inner_box": self.locators.GREEDY_INNER_DROPPABLE,
+                "inner_text": self.locators.GREEDY_INNER_DROPPABLE_TEXT,
+            },
+            "not_greedy": {
+                "outer_box": self.locators.NOT_GREEDY_OUTER_DROPPABLE,
+                "outer_text": self.locators.NOT_GREEDY_OUTER_DROPPABLE_TEXT,
+                "inner_box": self.locators.NOT_GREEDY_INNER_DROPPABLE,
+                "inner_text": self.locators.NOT_GREEDY_INNER_DROPPABLE_TEXT,
+            },
+        }
+
+        self.element_is_visible(self.locators.PREV_PROP_TAB).click()
+        drag_div = self.element_is_visible(self.locators.PREV_PROP_DRAGGABLE)
+        time.sleep(2)
+        inner_box = self.element_is_visible(pp_locators[element]["inner_box"])
+        self.action_drag_and_drop_to_element(drag_div, inner_box)
+        time.sleep(2)
+        inner_text = self.element_is_visible(pp_locators[element]["inner_text"]).text
+        outer_text = self.element_is_visible(pp_locators[element]["outer_text"]).text
+
+        return inner_text, outer_text
+
+    def drop_revert_draggable(self, element):
+        """Drag and drop operation on an element that either will or will not revert to its original position,
+        and return the position of the element after the move and after the potential revert.
+
+        Args:
+            element (str): Specifies whether to interact with the element ('will_revert', 'not_revert')
+
+        Returns:
+            tuple: A tuple containing the CSS style attribute values representing the position of the element
+            after the move and after the revert.
+        """
+        rd_locators = {
+            "will_revert": self.locators.REV_GRAG_WILL_REVERT,
+            "not_revert": self.locators.REV_GRAG_NOT_REVERT
+        }
+
+        self.element_is_visible(self.locators.REV_DRAG_TAB).click()
+        drag_div = self.element_is_visible(rd_locators[element])
+        drop_div = self.element_is_visible(self.locators.REV_DRAG_DROPPABLE)
+
+        self.action_drag_and_drop_to_element(drag_div, drop_div)
+        position_after_move = drag_div.get_attribute("style")
+        time.sleep(2)
+        position_after_revert = drag_div.get_attribute("style")
+        return position_after_move, position_after_revert

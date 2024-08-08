@@ -95,6 +95,7 @@ $PROJECT_ROOT
     - `TestSortable`: **Sortable** page test cases. Verifies that the list and grid elements can be shuffled.
     - `TestSelectable`: **Selectable** page test cases. Verifies that the correct number of list and grid items are selected.
     - `TestResizable`: **Resizable** page test cases. Verifies that the resizable elements (w/ constraints and w/o) correctly resizes to the maximum and minimum specified sizes.
+    - `TestDroppable`: **Droppable** page test cases. Verifies drag-and-drop functionality, including simple drops, acceptance of elements, nested target behavior, and the reversion of draggable elements to their original positions.
   - `widgets_test.py`:  Test cases for Widgets section.
     - `TestAccordian`: **Accordian** page test cases. Verifies that the headers and texts of all three sections in the accordion component are correctly displayed and not empty on the accordion page.
     - `TestAutoComplete`: **Auto Complete** page test cases. Contains tests for verifying the addition and removal of multiple colors in a multi-select autocomplete field, and the addition of a single color in a single-select autocomplete field on the autocomplete page.
