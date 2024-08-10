@@ -1,5 +1,5 @@
 from conftest import driver
-from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage
+from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage, DraggablePage
 
 
 class TestInteractions:
@@ -95,3 +95,29 @@ class TestInteractions:
 
             after_move, after_revert = droppable_page.drop_revert_draggable("not_revert")
             assert after_move == after_revert
+
+    class TestDraggable:
+        def test_simple(self, driver):
+            draggable_page = DraggablePage(driver, "https://demoqa.com/dragabble")
+            draggable_page.open()
+
+            before, after = draggable_page.drag_simple()
+            assert before != after, "Error. Simple dragbox position has not been changed."
+
+        def test_axis_restricted_only_x(self, driver):
+            draggable_page = DraggablePage(driver, "https://demoqa.com/dragabble")
+            draggable_page.open()
+
+            before, after = draggable_page.drag_axis_restricted('x')
+            assert before[0] == after[0] and before[1] != after[1], ("Error. X axis restricted dragbox position has "
+                                                                     "been changed incorrectly.")
+
+        def test_axis_restricted_only_y(self, driver):
+            draggable_page = DraggablePage(driver, "https://demoqa.com/dragabble")
+            draggable_page.open()
+
+            before, after = draggable_page.drag_axis_restricted('y')
+            assert before[0] != after[0] and before[1] == after[1], ("Error. Y axis restricted dragbox position has "
+                                                                     "been changed incorrectly.")
+
+        # TODO: Container restricted

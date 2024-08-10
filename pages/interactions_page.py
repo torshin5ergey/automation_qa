@@ -1,8 +1,9 @@
 import time
 import random
+import re
 
 from locators.interactions_page_locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators, \
-    DroppablePageLocators
+    DroppablePageLocators, DraggablePageLocators
 from pages.base_page import BasePage
 
 
@@ -266,3 +267,65 @@ class DroppablePage(BasePage):
         time.sleep(2)
         position_after_revert = drag_div.get_attribute("style")
         return position_after_move, position_after_revert
+
+
+class DraggablePage(BasePage):
+    """https://demoqa.com/dragabble"""
+    locators = DraggablePageLocators()
+
+    def random_drag_and_check(self, drag_element):
+        """Randomly drags an element twice and compares its styles before and after the movement.
+
+        Args:
+            drag_element: The element to be dragged.
+        """
+        self.action_drag_and_drop_by_offset(drag_element, random.randint(1, 50), random.randint(1, 50))
+        before = drag_element.get_attribute('style')
+        self.action_drag_and_drop_by_offset(drag_element, random.randint(1, 50), random.randint(1, 50))
+        after = drag_element.get_attribute('style')
+        return before, after
+
+    def get_top_left_position(self, style):
+        """Extracts the top and left positions from the given style string.
+
+        Args:
+            style (str): The CSS style string containing `top` and `left` properties.
+
+        Returns:
+            tuple: A tuple containing the `top` and `left` positions as integers.
+        """
+        top_position = re.findall(r'top: ([0-9]{1,4})px', style)[0]
+        left_position = re.findall(r'left: ([0-9]{1,4})px', style)[0]
+        return int(top_position), int(left_position)
+
+    def drag_simple(self):
+        """Simple drag-and-drop operation on an element and returns its style before and after the drag.
+
+        Returns:
+            tuple: A tuple containing the style attributes of the element before and after the drag.
+        """
+        self.element_is_visible(self.locators.SIMPLE_TAB).click()
+        drag_div = self.element_is_visible(self.locators.SIMPLE_DRAGBOX)
+        before, after = self.random_drag_and_check(drag_div)
+        return before, after
+
+    def drag_axis_restricted(self, axis):
+        """Drags an element along a restricted axis (either x or y) and returns its top-left position before and after
+        the drag.
+
+        Args:
+            axis (str): The axis along which to drag the element. Should be either 'x' or 'y'.
+
+        Returns:
+            tuple: A tuple containing the top and left positions before and after the drag.
+        """
+        axis_locators = {
+            'x': self.locators.AR_ONLY_X_DRAGBOX,
+            'y': self.locators.AR_ONLY_Y_DRAGBOX
+        }
+        self.element_is_visible(self.locators.AR_TAB).click()
+        drag_div = self.element_is_visible(axis_locators[axis])
+        before, after = self.random_drag_and_check(drag_div)
+        before_top_left = self.get_top_left_position(before)
+        after_top_left = self.get_top_left_position(after)
+        return before_top_left, after_top_left
