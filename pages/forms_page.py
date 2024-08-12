@@ -1,6 +1,7 @@
 import os
 import time
 
+import allure
 from selenium.webdriver import Keys
 
 from pages.base_page import BasePage
@@ -12,6 +13,7 @@ class FormsPage(BasePage):
     """Practice Form Page https://demoqa.com/automation-practice-form"""
     locators = FormsPageLocators()
 
+    @allure.step("Fill form fields")
     def fill_form_fields(self):
         """
         Fills out the form fields with generated mock person data and submits the form.
@@ -49,6 +51,7 @@ class FormsPage(BasePage):
         ]
         return output_data
 
+    @allure.step("Get form result")
     def get_form_result(self):
         """
         Retrieves the form result data from the results table.

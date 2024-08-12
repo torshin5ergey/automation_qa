@@ -1,16 +1,19 @@
 import random
 import time
 
+import allure
 import pytest
 
-from pages.base_page import BasePage
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
     UploadDownloadPage, DynamicPropertiesPage
-from conftest import driver  # Importing the WebDriver instance as a fixture
+from conftest import driver
 
 
+@allure.suite("Elements section")
 class TestElements:
+    @allure.feature("Text Box")
     class TestTextBox:  # TextBoxPage functionality
+        @allure.title("Test TextBox")
         def test_textbox(self, driver):
             # Creating an instance of the TextBoxPage class with the WebDriver instance and textbox URL
             textbox_page = TextBoxPage(driver, "https://demoqa.com/text-box")
@@ -27,7 +30,9 @@ class TestElements:
             assert current_address == output_cur_address, "Error: The current address does not match"
             assert permanent_address == output_perm_address, "Error: The permanent address does not match"
 
+    @allure.feature("Check Box")
     class TestCheckBox:  # CheckBoxPage functionality
+        @allure.title("Test CheckBox")
         def test_checkbox(self, driver):
             # Creating an instance of the CheckBoxPage class with the WebDriver instance and checkbox URL
             checkbox_page = CheckBoxPage(driver, "https://demoqa.com/checkbox")
@@ -42,7 +47,9 @@ class TestElements:
             # Assert result
             assert input_checkboxes == output_result, "Error: The checkboxes have not been selected"
 
+    @allure.feature("Radio Button")
     class TestRadioButton:  # RadioButton Page functionality
+        @allure.title("Test RadioButton")
         def test_radiobutton(self, driver):
             # Creating an instance of the RadioButtonPage class with the WebDriver instance and checkbox URL
             radiobutton_page = RadioButtonPage(driver, "https://demoqa.com/radio-button")
@@ -61,7 +68,9 @@ class TestElements:
             # yield the same result as before.
             assert output_no == output_impressive, "Error: 'No' have been selected"
 
+    @allure.feature("Webtable")
     class TestWebTable:  # WebTable Page functionality
+        @allure.title("Test Webtable add person")
         def test_webtable_add_person(self, driver):
             # Creating an instance of the WebTablePage class with the WebDriver instance and checkbox URL
             webtable_page = WebTablePage(driver, "https://demoqa.com/webtables")
@@ -71,6 +80,7 @@ class TestElements:
             table_result = webtable_page.check_added_person()
             assert new_person in table_result, "Error: The person was not added in the table"
 
+        @allure.title("Test Webtable search person")
         def test_webtable_search_person(self, driver):
             # Creating an instance of the WebTablePage class with the WebDriver instance and checkbox URL
             webtable_page = WebTablePage(driver, "https://demoqa.com/webtables")
@@ -81,6 +91,7 @@ class TestElements:
             table_result = webtable_page.check_search_person()
             assert new_person_keyword in table_result, "Error: The person was not found in the table."
 
+        @allure.title("Test Webtable edit person")
         def test_webtable_edit_person(self, driver):
             # Creating an instance of the WebTablePage class with the WebDriver instance and checkbox URL
             webtable_page = WebTablePage(driver, "https://demoqa.com/webtables")
@@ -94,6 +105,7 @@ class TestElements:
             row = webtable_page.check_search_person()
             assert edited_data in row, "Error: The person data has not been changed."
 
+        @allure.title("Test Webtable delete person")
         def test_webtable_delete_person(self, driver):
             # Creating an instance of the WebTablePage class with the WebDriver instance and checkbox URL
             webtable_page = WebTablePage(driver, "https://demoqa.com/webtables")
@@ -106,6 +118,7 @@ class TestElements:
             text = webtable_page.check_deleted_person()
             assert text == "No rows found"
 
+        @allure.title("Test Webtable change rows per page")
         def test_webtable_change_rows_per_page(self, driver):
             # Creating an instance of the WebTablePage class with the WebDriver instance and checkbox URL
             webtable_page = WebTablePage(driver, "https://demoqa.com/webtables")
@@ -115,7 +128,9 @@ class TestElements:
             assert count == [5, 10, 20, 25, 50, 100], (
                 "Error: The rows per page number has not been changed or has changed incorrectly.")
 
-    class TestButtonsPage:  # Click, Double-click, Right-click Page functionality
+    @allure.feature("Buttons")
+    class TestButtonsPage:
+        @allure.title("Test Buttons")
         def test_buttons_clicks(self, driver):
             # Creating an instance of the ButtonsPage class with the WebDriver instance and checkbox URL
             buttons_page = ButtonsPage(driver, "https://demoqa.com/buttons")
@@ -128,7 +143,9 @@ class TestElements:
             assert right == "You have done a right click", "Error: The right click button was not pressed."
             assert left == "You have done a dynamic click", "Error: The dynamic click button was not pressed."
 
+    @allure.feature("Links")
     class TestLinksPage:
+        @allure.title("Test Simple link")
         def test_simple_link(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             links_page = LinksPage(driver, "https://demoqa.com/links")
@@ -137,6 +154,7 @@ class TestElements:
             href_link, current_url = links_page.check_new_tab_simple_link()
             assert href_link == current_url, "Error: The link is broken or url is incorrect."
 
+        @allure.title("Test Dynamic link")
         def test_dynamic_link(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             links_page = LinksPage(driver, "https://demoqa.com/links")
@@ -145,6 +163,7 @@ class TestElements:
             href_link, current_url = links_page.check_new_tab_dynamic_link()
             assert href_link == current_url, "Error: The link is broken or url is incorrect."
 
+        @allure.title("Test Created link")
         def test_created_link(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             links_page = LinksPage(driver, "https://demoqa.com/links")
@@ -156,6 +175,7 @@ class TestElements:
             assert response_code == expected_response_code, "Error: The link doesn't works or status code is not 201."
             assert link_response is True, "Error: The output text doesnt contains status code or status message."
 
+        @allure.title("Test Moved link")
         def test_moved_link(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             links_page = LinksPage(driver, "https://demoqa.com/links")
@@ -167,6 +187,7 @@ class TestElements:
             assert response_code == expected_response_code, "Error: The link doesn't works or status code is not 301."
             assert link_response is True, "Error: The output text doesnt contains status code or status message."
 
+        @allure.title("Test BadRequest link")
         def test_bad_request_link(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             links_page = LinksPage(driver, "https://demoqa.com/links")
@@ -178,6 +199,7 @@ class TestElements:
             assert response_code == expected_response_code, "Error: The link works or status code is not 400."
             assert link_response is True, "Error: The output text doesnt contains status code or status message."
 
+        @allure.title("Test Unauthorized link")
         def test_unauthorized_link(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             links_page = LinksPage(driver, "https://demoqa.com/links")
@@ -189,6 +211,7 @@ class TestElements:
             assert response_code == expected_response_code, "Error: The link works or status code is not 401."
             assert link_response is True, "Error: The output text doesnt contains status code or status message."
 
+        @allure.title("Test Forbidden link")
         def test_forbidden_link(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             links_page = LinksPage(driver, "https://demoqa.com/links")
@@ -200,6 +223,7 @@ class TestElements:
             assert response_code == expected_response_code, "Error: The link works or status code is not 403."
             assert link_response is True, "Error: The output text doesnt contains status code or status message."
 
+        @allure.title("Test NotFound link")
         def test_notfound_link(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             links_page = LinksPage(driver, "https://demoqa.com/links")
@@ -211,7 +235,9 @@ class TestElements:
             assert response_code == expected_response_code, "Error: The link works or status code is not 404."
             assert link_response is True, "Error: The output text doesnt contains status code or status message."
 
+    @allure.feature("Upload/Download")
     class TestUploadDownload:
+        @allure.title("Test upload file")
         def test_upload_file(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             upload_download_page = UploadDownloadPage(driver, "https://demoqa.com/upload-download")
@@ -221,6 +247,7 @@ class TestElements:
             filename, result = upload_download_page.upload_file()
             assert filename == result, "Error: The file has not been uploaded."
 
+        @allure.title("Test download file")
         def test_download_file(self, driver):
             # Creating an instance of the LinksPage class with the WebDriver instance and checkbox URL
             upload_download_page = UploadDownloadPage(driver, "https://demoqa.com/upload-download")
@@ -230,9 +257,10 @@ class TestElements:
             check = upload_download_page.download_file()
             assert check is True, "Error: The file has not been downloaded."
 
+    @allure.feature("Dynamic Properties")
     class TestDynamicProperties:
-
-        @pytest.mark.skip(reason="Test is not working with webdriver_manager")
+        @allure.title("Test enable button")
+        @pytest.mark.skip(reason="Test is not stable")
         def test_enable_button(self, driver):
             # Creating an instance of the DynamicPropertiesPage class with the WebDriver instance and checkbox URL
             dynamic_properties_page = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
@@ -242,7 +270,8 @@ class TestElements:
             is_enabled = dynamic_properties_page.check_enable_button()
             assert is_enabled is True, 'Error: "Enable After 5 Seconds" button has not been enabled.'
 
-        @pytest.mark.skip(reason="Test is not working with webdriver_manager")
+        @allure.title("Test dynamic color property")
+        @pytest.mark.skip(reason="Test is not stable")
         def test_dynamic_color_property(self, driver):
             # Creating an instance of the DynamicPropertiesPage class with the WebDriver instance and checkbox URL
             dynamic_properties_page = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")
@@ -252,6 +281,7 @@ class TestElements:
             color_before, color_after = dynamic_properties_page.check_changed_color()
             assert color_before != color_after, "Error: The dynamic property color has not been changed."
 
+        @allure.title("Test 'visible after 5 seconds' button")
         def test_visible_button(self, driver):
             # Creating an instance of the DynamicPropertiesPage class with the WebDriver instance and checkbox URL
             dynamic_properties_page = DynamicPropertiesPage(driver, "https://demoqa.com/dynamic-properties")

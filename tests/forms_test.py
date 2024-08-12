@@ -1,12 +1,16 @@
 import time
 
+import allure
+
 from conftest import driver
 from pages.forms_page import FormsPage
 
 
+@allure.suite("Forms section")
 class TestForms:
-
+    @allure.feature("Forms page")
     class TestFormsPage:
+        @allure.title("Test form")
         def test_forms(self, driver):
             forms_page = FormsPage(driver, "https://demoqa.com/automation-practice-form")
             forms_page.open()
@@ -19,4 +23,4 @@ class TestForms:
                 result_data[1],  # Student Email
                 result_data[8],  # Address
                 result_data[3],  # Mobile
-                                   ], "Error: The form has not been filled."
+            ], "Error: The form has not been filled."

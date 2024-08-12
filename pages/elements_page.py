@@ -4,6 +4,7 @@ import random
 import time
 from pathlib import Path
 
+import allure
 import requests
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
@@ -17,6 +18,7 @@ from pages.base_page import BasePage
 class TextBoxPage(BasePage):  # https://demoqa.com/text-box
     locators = TextBoxLocators  # Setting locators attribute to TextBoxLocators class for element locators
 
+    @allure.step("Fill in all fields")
     def fill_all_fields(self):
         """Fill all form fields with auto-generated data.
 
@@ -42,6 +44,7 @@ class TextBoxPage(BasePage):  # https://demoqa.com/text-box
         self.element_is_visible(self.locators.SUBMIT).click()
         return full_name, email, current_address, permanent_address
 
+    @allure.step("Check filled form")
     def check_filled_form(self):
         """Verify the filled form data by extracting text from form fields.
 
@@ -64,10 +67,12 @@ class TextBoxPage(BasePage):  # https://demoqa.com/text-box
 class CheckBoxPage(BasePage):  # https://demoqa.com/checkbox
     locators = CheckBoxLocators  # Setting locators attribute to CheckBoxLocators class for element locators
 
+    @allure.step("Open full list")
     def open_full_list(self):
         """Toggle all checkbox list items."""
         self.element_is_visible(self.locators.EXPAND_ALL_BUTTON).click()
 
+    @allure.step("Click random checkbox")
     def click_random_checkbox(self):
         """Click random checkboxes."""
         # Getting the visible checkboxes list
@@ -84,6 +89,7 @@ class CheckBoxPage(BasePage):  # https://demoqa.com/checkbox
             else:
                 break
 
+    @allure.step("Get checked checkboxes")
     def get_checked_checkboxes(self):
         """Get the text of checked checkboxes.
 
@@ -97,6 +103,7 @@ class CheckBoxPage(BasePage):  # https://demoqa.com/checkbox
             data.append(item_title.text)
         return str(data).lower().replace(' ', '').replace('.doc', '')
 
+    @allure.step("Get output result")
     def get_output_result(self):
         """Gets the text from result field.
 
@@ -113,6 +120,7 @@ class CheckBoxPage(BasePage):  # https://demoqa.com/checkbox
 class RadioButtonPage(BasePage):  # https://demoqa.com/radio-button
     locators = RadioButtonLocators()  # Setting locators attribute to RadioButtonLocators class for element locators
 
+    @allure.step("Click radio")
     def click_radio(self, choice):
         """Click a radio button based on the provided choice.
 
@@ -131,6 +139,7 @@ class RadioButtonPage(BasePage):  # https://demoqa.com/radio-button
         # Click random radio
         self.element_is_visible(choices[choice]).click()
 
+    @allure.step("Get output result")
     def get_output_result(self):
         """Get the text from result field.
 
@@ -147,6 +156,7 @@ class RadioButtonPage(BasePage):  # https://demoqa.com/radio-button
 class WebTablePage(BasePage):  # https://demoqa.com/webtables
     locators = WebTableLocators()  # Setting locators attribute to WebTableLocators class for element locators
 
+    @allure.step("Add new person")
     def add_new_person(self, count=1):
         """Add new count of persons to the web table.
 
@@ -177,6 +187,7 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
             count -= 1
             return [first_name, last_name, str(age), email, str(salary), department]
 
+    @allure.step("Check added person")
     def check_added_person(self):
         """Return the details of added persons from the web table.
 
@@ -189,6 +200,7 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
             data.append(item.text.splitlines())
         return data
 
+    @allure.step("Search person")
     def search_person(self, keyword):
         """Search person with keyword.
 
@@ -197,6 +209,7 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         """
         self.element_is_visible(self.locators.SEARCH_INPUT).send_keys(keyword)
 
+    @allure.step("Check search person")
     def check_search_person(self):
         """Check and return data about a person in a table row.
 
@@ -208,6 +221,7 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         parent_row = delete_button.find_element(*self.locators.PARENT_ROW)
         return parent_row.text.splitlines()
 
+    @allure.step("Edit person info")
     def edit_person_info(self):
         """Edit person random data field and return edited data.
 
@@ -239,10 +253,12 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         self.element_is_visible(self.locators.SUBMIT_BUTTON).click()
         return str(data_to_edit)
 
+    @allure.step("Delete person")
     def delete_person(self):
         """Delete a person's entry from the table."""
         self.element_is_visible(self.locators.DELETE_BUTTON).click()
 
+    @allure.step("Check deleted person")
     def check_deleted_person(self):
         """Check and return the deletion of a person's entry from the table.
 
@@ -251,6 +267,7 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
         """
         return self.element_is_present(self.locators.NO_ROWS_FOUND_LABEL).text
 
+    @allure.step("Change displayed rows count")
     def change_displayed_rows_count(self):
         """Change the number of rows displayed per page and return the row count for each setting.
 
@@ -270,6 +287,7 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
             data.append(self.check_rows_per_page_count())
         return data
 
+    @allure.step("Check rows per page count")
     def check_rows_per_page_count(self):
         """Check the number of rows currently displayed on the page.
 
@@ -283,6 +301,7 @@ class WebTablePage(BasePage):  # https://demoqa.com/webtables
 class ButtonsPage(BasePage):  # https://demoqa.com/buttons
     locators = ButtonsLocators()
 
+    @allure.step("Double-click button")
     def click_double_button(self):
         """Perform double-click action on the button and return output text.
 
@@ -292,6 +311,7 @@ class ButtonsPage(BasePage):  # https://demoqa.com/buttons
         self.action_double_click(self.element_is_visible(self.locators.DOUBLE_CLICK_BUTTON))
         return self.check_clicked_buttons(self.locators.DOUBLE_CLICK_OUTPUT_RESULT)
 
+    @allure.step("Right-click button")
     def click_right_button(self):
         """Perform a right-click action on the right-click button and return the result.
 
@@ -301,6 +321,7 @@ class ButtonsPage(BasePage):  # https://demoqa.com/buttons
         self.action_right_click(self.element_is_visible(self.locators.RIGHT_CLICK_BUTTON))
         return self.check_clicked_buttons(self.locators.RIGHT_CLICK_OUTPUT_RESULT)
 
+    @allure.step("Click dynamic button")
     def click_dynamic_button(self):
         """Perform a click action on the dynamically loaded button and return the result.
 
@@ -310,6 +331,7 @@ class ButtonsPage(BasePage):  # https://demoqa.com/buttons
         self.element_is_visible(self.locators.LEFT_CLICK_BUTTON).click()
         return self.check_clicked_buttons(self.locators.LEFT_CLICK_OUTPUT_RESULT)
 
+    @allure.step("Check clicked button")
     def check_clicked_buttons(self, element):
         """Check the result of the click actions by getting the text of the specified element.
 
@@ -325,6 +347,7 @@ class ButtonsPage(BasePage):  # https://demoqa.com/buttons
 class LinksPage(BasePage):  # https://demoqa.com/links
     locators = LinksPageLocators()
 
+    @allure.step("Check new tab simple link")
     def check_new_tab_simple_link(self):
         """Check if a simple link opens in a new tab and returns the URL.
 
@@ -356,6 +379,7 @@ class LinksPage(BasePage):  # https://demoqa.com/links
         except Exception as e:
             return link_href, f"Error: {str(e)}."
 
+    @allure.step("Check new tab dynamic link")
     def check_new_tab_dynamic_link(self):
         """Check if a dynamic link opens in a new tab and returns the URL.
 
@@ -387,6 +411,7 @@ class LinksPage(BasePage):  # https://demoqa.com/links
         except Exception as e:
             return link_href, f"Error: {str(e)}."
 
+    @allure.step("Get link output response")
     def get_link_output_response(self, code, status_text):
         """Check if the output text contains the specified status code and status message.
 
@@ -403,6 +428,7 @@ class LinksPage(BasePage):  # https://demoqa.com/links
         else:
             return False
 
+    @allure.step("Check API call link")
     def check_apicall_link(self, url, expected_code):
         """Check if a link returns the expected status code and click the corresponding link element.
 
@@ -434,6 +460,7 @@ class UploadDownloadPage(BasePage):
     """Upload and Download Page https://demoqa.com/upload-download"""
     locators = UploadDownloadPageLocators()
 
+    @allure.step("Upload file")
     def upload_file(self):
         """Generate a file, upload it, and check the uploaded result.
 
@@ -449,6 +476,7 @@ class UploadDownloadPage(BasePage):
         result_path = Path(result).resolve()
         return filename_path.name, result_path.name
 
+    @allure.step("Download file")
     def download_file(self):
         """Download a file from a base64 encoded URL, check its existence, and delete it.
 
@@ -472,6 +500,7 @@ class DynamicPropertiesPage(BasePage):
     """Dynamic Properties Page https://demoqa.com/dynamic-properties"""
     locators = DynamicPropertiesPageLocators()
 
+    @allure.step("Check 'enable after 5 second' button")
     def check_enable_button(self):
         """Checks if the 'Enable After 5 seconds' button on the page becomes clickable after a delay.
 
@@ -484,6 +513,7 @@ class DynamicPropertiesPage(BasePage):
         except TimeoutException:
             return False
 
+    @allure.step("Check change color")
     def check_changed_color(self):
         """
         Checks if the color of a specific button changes after a delay.
@@ -497,6 +527,7 @@ class DynamicPropertiesPage(BasePage):
         color_after = color_button.value_of_css_property('color')
         return color_before, color_after
 
+    @allure.step("Check 'visible after 5 seconds' button")
     def check_visible_button(self):
         """
         Checks if the 'Visible After 5 seconds' button on the page becomes visible after a delay.

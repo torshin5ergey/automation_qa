@@ -1,6 +1,8 @@
 import random
 import time
 
+import allure
+
 from pages.base_page import BasePage
 from locators.afw_page_locators import BrowserWindowsPageLocators, AlertsPageLocators, FramesPageLocators, \
     NestedFramesPageLocators, ModalDialogsPageLocators
@@ -10,6 +12,7 @@ class BrowserWindowsPage(BasePage):
     """https://demoqa.com/browser-windows"""
     locators = BrowserWindowsPageLocators()
 
+    @allure.step("Get opened tab header")
     def get_new_opened_tab_header(self, open_as='tab'):
         """Open a new tab or window and get the header of the new page.
 
@@ -33,6 +36,7 @@ class AlertsPage(BasePage):
     """https://demoqa.com/alerts"""
     locators = AlertsPageLocators()
 
+    @allure.step("Get alert text")
     def get_alert_text(self, delay=0):
         """Get the text of an alert.
 
@@ -50,6 +54,7 @@ class AlertsPage(BasePage):
         alert_window = self.switch_to_alert_window()
         return alert_window.text
 
+    @allure.step("Get 'confirm' alert text")
     def get_confirm_alert_text(self):
         """Get the text result of a confirmation alert after accepting it.
 
@@ -62,6 +67,7 @@ class AlertsPage(BasePage):
         text_result = self.element_is_present(self.locators.CONFIRM_RESULT_TEXT).text
         return text_result
 
+    @allure.step("Get 'prompt' alert text")
     def get_prompt_alert_text(self):
         """Get the text entered into a prompt alert and the result text after accepting it.
 
@@ -81,6 +87,7 @@ class FramesPage(BasePage):
     """https://demoqa.com/frames"""
     locators = FramesPageLocators()
 
+    @allure.step("Get frame data")
     def get_frame_data(self, frame_name):
         """Get the text and dimensions of a specified frame.
 
@@ -107,6 +114,7 @@ class NestedFramesPage(BasePage):
     """https://demoqa.com/nestedframes"""
     locators = NestedFramesPageLocators()
 
+    @allure.step("Get frames text")
     def get_frames_text(self):
         """Get the text from both the parent and child frames.
 
@@ -130,6 +138,7 @@ class ModalDialogsPage(BasePage):
     """https://demoqa.com/modal-dialogs"""
     locators = ModalDialogsPageLocators()
 
+    @allure.step("Get modal window data (title and text)")
     def get_modal_data(self, modal_name):
         """Get the title and text of a specified modal.
 

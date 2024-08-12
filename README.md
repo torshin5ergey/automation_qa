@@ -31,10 +31,14 @@ pip install -r requirements.txt
 
 ## Usage
 
-1. Update the `conftest.py` file to initialize the WebDriver instance with the appropriate driver using `webdriver-manager`.
-2. Run the tests using pytest:
-```bash
-pytest
+1. **Setup the WebDriver**. Update the `conftest.py` file to initialize the WebDriver instance with the appropriate driver using `webdriver-manager`.
+2. **Run Pytest tests**. Execute tests using pytest, and specify the directory where the Allure results should be saved. 
+```
+pytest --alluredir=tests\allure_results .\tests
+```
+3. **Serve Allure Reports**. Generate and serve the Allure report to visualize the test results.
+```
+allure serve .\tests\allure_results\ 
 ```
 
 ## Project structure
@@ -88,7 +92,7 @@ $PROJECT_ROOT
     - `TestButtonsPage` **Buttons** pge test cases. It contains: Double-click button, Right-click (context-click) button, Left-click dynamic ID button.
     - `TestLinksPage` **Links** page test cases. It contains: Simple link ([200 OK](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200), to home), Dynamic simple link ([200 OK](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/200), to home), Created link ([201 Created](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/201)), No content ([204 No Content](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204)),Moved link ([301 Moved Permanently](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/301)), Bad request link([400 Bad Request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400)), Unauthorized link ([401 Unauthorized](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401)), Forbidden link ([403 Forbidden](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403)), Not Found link ([404 Not Found](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404)).
     - `TestUploadDownload` **Upload and Download files** page test cases. It contains: Upload and download file.
-    - `TestDynamicProperties` **Dynamic Properties** page test case. It contains: The "Enable After 5 Seconds" button becomes clickable within a timeout, The color of the "Color Change" button changes after a 5 seconds delay, The "Visible After 5 Seconds" button becomes visible after a 5 seconds delay. *This tests may not work correctly with the `webdriver_manager` library, because in that case the test startup will be much later than the change of dynamic properties.*
+    - `TestDynamicProperties` **Dynamic Properties** page test case. It contains: The "Enable After 5 Seconds" button becomes clickable within a timeout, The color of the "Color Change" button changes after a 5 seconds delay, The "Visible After 5 Seconds" button becomes visible after a 5 seconds delay. *This tests may not work correctly, because the test startup will be much later than the change of dynamic properties.*
   - `forms_test.py`: Test cases for Practice Form in Forms section.
     - `TestFormsPage` **Practice Form** page test case. Generates data and verifies that the form can be correctly filled and submitted.
   - `interactions_test.py`: Test cases for Interactions section.
@@ -119,12 +123,17 @@ $PROJECT_ROOT
 - [Page Object Model (POM)](https://www.selenium.dev/documentation/test_practices/encouraged/page_object_models/) is used in this project. POM is a **design pattern** in test automation that separates the logic of testing from the logic of managing web elements. Each web page is represented as a **Page Object** containing methods to interact with page elements (e.g., clicks, text inputs, etc.) and properties to access these elements. By implementing POM, tests become more stable, readable, and easily maintainable. It reduces code duplication and enhances modularity, allowing development and testing teams to efficiently handle changes in the application.
 - [Faker](https://faker.readthedocs.io/en/master/) library is used in this project. Faker is a Python library that generates fake data, such as names, addresses, and phone numbers. By using Faker you can populate data, create **mock user profiles**, and simulate realistic scenarios without relying on actual sensitive or confidential information. Faker enhances test automation by providing a convenient way to generate diverse and customizable test data, improving test coverage and accuracy.
 - [Requests](https://requests.readthedocs.io/en/latest/) library is used for making HTTP requests (GET, POST), checking response content.
-- **Automated file download check**. The process of checking and creating a file. This methos is used in the `download_file` method of the `UploadDownloadPage` class in the `elements_page.py` file. It creates a temporary .jpg file, then decodes **base64** data and writes it to the file starting from the JPEG header. After this, the existence of the file is checked using os.path.exists, and the file is deleted after successful verification.
+- **Automated file download check**. The process of checking and creating a file. This method is used in the `download_file` method of the `UploadDownloadPage` class in the `elements_page.py` file. It creates a temporary .jpg file, then decodes **base64** data and writes it to the file starting from the JPEG header. After this, the existence of the file is checked using os.path.exists, and the file is deleted after successful verification.
 - This project uses [Google style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) inspired **docstrings**.
+- [Allure Report](https://allurereport.org/) is used for generating clear and user-friendly test reports that allow for the analysis and **visualization** of test execution results.
 
 ## Requirements
 
+- [Allure Report](https://allurereport.org/) (2.30.0 used)
+
+
 - [pytest](https://pypi.org/project/pytest/) (8.2.0 used)
+- [allure-pytest](https://pypi.org/project/allure-pytest/) (2.13.5 used)
 - [selenium](https://pypi.org/project/selenium/) (4.20.0 used)
 - [webdriver-manager](https://pypi.org/project/webdriver-manager/) (4.0.1 used)
 - [Faker](https://pypi.org/project/Faker/) (25.1.0 used)  

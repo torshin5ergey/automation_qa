@@ -2,6 +2,8 @@ import time
 import random
 import re
 
+import allure
+
 from locators.interactions_page_locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators, \
     DroppablePageLocators, DraggablePageLocators
 from pages.base_page import BasePage
@@ -11,6 +13,7 @@ class SortablePage(BasePage):
     """https://demoqa.com/accordian"""
     locators = SortablePageLocators()
 
+    @allure.step("Get sortable items")
     def get_sortable_items(self, elements):
         """Returns a list of text from all sortable items specified by the elements locator.
 
@@ -23,6 +26,7 @@ class SortablePage(BasePage):
         items = self.elements_are_visible(elements)
         return [item.text for item in items]
 
+    @allure.step("Switch two elements")
     def switch_two_elements(self, element):
         """Switch to a specified sortable tab (list or grid), shuffle two items within the tab,
         and return their order before and after the shuffle.
@@ -59,6 +63,7 @@ class SelectablePage(BasePage):
     """https://demoqa.com/selectable"""
     locators = SelectablePageLocators()
 
+    @allure.step("Click random selectable item")
     def click_random_selectable_item(self, elements):
         """Clicks on a random selectable item from the list of elements.
 
@@ -69,6 +74,7 @@ class SelectablePage(BasePage):
         random.sample(items, k=1)[0].click()
         pass
 
+    @allure.step("Get selectable items")
     def get_selectable_items(self, element):
         """Switches to a specified selectable tab (list or grid), randomly selects a number of items,
         and returns the count of selected items and the list of active (selected) items.
@@ -104,6 +110,7 @@ class ResizablePage(BasePage):
     """https://demoqa.com/resizable"""
     locators = ResizablePageLocators()
 
+    @allure.step("Get size values")
     def get_size_values(self, size):
         """Extracts the width and height values from a CSS style string.
 
@@ -117,6 +124,7 @@ class ResizablePage(BasePage):
         height = size.split(';')[1].split(':')[1].replace(' ', '')
         return width, height
 
+    @allure.step("Get resizable element minimum and maximum size")
     def get_minmax_size(self, element):
         """Retrieves the style attribute value of the specified element.
 
@@ -130,6 +138,7 @@ class ResizablePage(BasePage):
         size_style = size.get_attribute("style")
         return size_style
 
+    @allure.step("Change resizable element size")
     def change_resizable_size(self, element):
         """Resizes the specified resizable element by increasing and then decreasing its size.
 
@@ -173,6 +182,7 @@ class DroppablePage(BasePage):
     """https://demoqa.com/droppable"""
     locators = DroppablePageLocators()
 
+    @allure.step("Drop Simple")
     def drop_simple(self):
         """Drag and drop operation and return the text of the drop target.
 
@@ -185,6 +195,7 @@ class DroppablePage(BasePage):
         self.action_drag_and_drop_to_element(drag_div, drop_div)
         return drop_div.text
 
+    @allure.step("Drop Accept")
     def drop_accept(self):
         """Drag and drop operations with both acceptable and non-acceptable elements,
         and return the text of the drop target for each case.
@@ -206,6 +217,7 @@ class DroppablePage(BasePage):
 
         return drop_not_acceptable_text, drop_acceptable_text
 
+    @allure.step("Drop Prevent Propagation")
     def drop_prevent_propagation(self, element):
         """Drag and drop operation in the 'Prevent Propagation' scenario,
         and return the text of both the inner and outer drop targets.
@@ -242,6 +254,7 @@ class DroppablePage(BasePage):
 
         return inner_text, outer_text
 
+    @allure.step("Drop Revert Draggable")
     def drop_revert_draggable(self, element):
         """Drag and drop operation on an element that either will or will not revert to its original position,
         and return the position of the element after the move and after the potential revert.
@@ -273,6 +286,7 @@ class DraggablePage(BasePage):
     """https://demoqa.com/dragabble"""
     locators = DraggablePageLocators()
 
+    @allure.step("Random drag and check")
     def random_drag_and_check(self, drag_element):
         """Randomly drags an element twice and compares its styles before and after the movement.
 
@@ -285,6 +299,7 @@ class DraggablePage(BasePage):
         after = drag_element.get_attribute('style')
         return before, after
 
+    @allure.step("Get top and left position from 'style' attribute")
     def get_top_left_position(self, style):
         """Extracts the top and left positions from the given style string.
 
@@ -298,6 +313,7 @@ class DraggablePage(BasePage):
         left_position = re.findall(r'left: ([0-9]{1,4})px', style)[0]
         return int(top_position), int(left_position)
 
+    @allure.step("Drag Simple")
     def drag_simple(self):
         """Simple drag-and-drop operation on an element and returns its style before and after the drag.
 
@@ -309,6 +325,7 @@ class DraggablePage(BasePage):
         before, after = self.random_drag_and_check(drag_div)
         return before, after
 
+    @allure.step("Drag Axis Restricted")
     def drag_axis_restricted(self, axis):
         """Drags an element along a restricted axis (either x or y) and returns its top-left position before and after
         the drag.

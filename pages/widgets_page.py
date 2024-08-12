@@ -1,6 +1,7 @@
 import random
 import time
 
+import allure
 from selenium.common import TimeoutException
 from selenium.webdriver import Keys
 
@@ -14,6 +15,7 @@ class AccordianPage(BasePage):
     """https://demoqa.com/accordian"""
     locators = AccordianPageLocators()
 
+    @allure.step("Get section data")
     def get_section_data(self, section_name):
         section_locators = {
             1: (self.locators.FIRST_SECTION_HEADER, self.locators.FIRST_SECTION_TEXT),
@@ -34,6 +36,7 @@ class AutocompletePage(BasePage):
     """https://demoqa.com/auto-complete"""
     locators = AutocompletePageLocators()
 
+    @allure.step("Add value multiselect")
     def add_value_multi(self, num=1):
         """Add multiple values to the multi-select input field.
 
@@ -50,6 +53,7 @@ class AutocompletePage(BasePage):
             input_multi.send_keys(Keys.ENTER)
         return colors
 
+    @allure.step("Remove value multiselect")
     def remove_value_multi(self, num=1):
         """Remove a specified number of values from the multi-select input field.
         Note: The `num` should be less than the current number of selected elements by 1.
@@ -67,6 +71,7 @@ class AutocompletePage(BasePage):
         count_values_after = len(self.elements_are_present(self.locators.MULTI_COMPLETE_VALUES))
         return count_values_before, count_values_after
 
+    @allure.step("Get current multiselection")
     def get_current_multi_selection(self):
         """Get the current selection of colors from the multi-select input field.
 
@@ -82,10 +87,12 @@ class AutocompletePage(BasePage):
             colors.append(color.text)
         return colors
 
+    @allure.step("Clear multiselection")
     def clear_all_multi(self):
         """Clear all multiselect values."""
         self.element_is_visible(self.locators.MULTI_CLEAR_VALUES).click()
 
+    @allure.step("Add singleselection value")
     def add_value_single(self):
         """Add a value to the single-select input field.
 
@@ -98,6 +105,7 @@ class AutocompletePage(BasePage):
         input_single.send_keys(Keys.ENTER)
         return color[0]
 
+    @allure.step("Get current singleselection value")
     def get_current_single_selection(self):
         """Get the current selection from the single-select input field.
 
@@ -111,6 +119,7 @@ class AutocompletePage(BasePage):
 class DatePickerPage(BasePage):
     locators = DatePickerPageLocators()
 
+    @allure.step("Set date")
     def set_date(self):
         """Sets the date in the date input field.
 
@@ -131,6 +140,7 @@ class DatePickerPage(BasePage):
         date_after = input_date.get_attribute('value')
         return date_before, date_after
 
+    @allure.step("Set date and time")
     def set_datetime(self):
         """
         Sets the date and time in the datetime input field.
@@ -166,6 +176,7 @@ class DatePickerPage(BasePage):
 class SliderPage(BasePage):
     locators = SliderPageLocators()
 
+    @allure.step("Change slider value")
     def change_slider_value(self):
         """Changes the value of a slider and retrieves its value before and after the change.
 
@@ -183,6 +194,7 @@ class SliderPage(BasePage):
 class ProgressBarPage(BasePage):
     locators = ProgressBarPageLocators()
 
+    @allure.step("Start and stop progressbar")
     def start_stop_progressbar(self):
         """Starts and stops the progress bar, then retrieves its value before and after.
 
@@ -204,6 +216,7 @@ class TabsPage(BasePage):
     """https://demoqa.com/tabs"""
     locators = TabsPagelocators()
 
+    @allure.step("Get tab content")
     def get_tab_content(self, tab):
         """Clicks on a specified tab and retrieves the text content of that tab, along with the length of the content.
 
@@ -229,6 +242,7 @@ class ToolTipsPage(BasePage):
     """https://demoqa.com/tool-tips"""
     locators = ToolTipsPageLocators()
 
+    @allure.step("Get tooltip text")
     def get_tooltip_text(self, hover_to):
         """Hovers over a specified element to trigger its tooltip and then retrieves the tooltip text.
 
@@ -268,6 +282,7 @@ class MenuPage(BasePage):
     """https://demoqa.com/menu"""
     locators = MenuPageLocators()
 
+    @allure.step("Get menu items")
     def get_menu_items(self):
         """Return a list of text from all menu items on the page."""
         menu = self.elements_are_present(self.locators.MENU_ITEM_LIST)
