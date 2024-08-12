@@ -1,3 +1,6 @@
+from datetime import datetime
+
+import allure
 import pytest
 from selenium import webdriver
 
@@ -21,5 +24,8 @@ def driver():
     driver.maximize_window()
     # Returning the driver for use in tests
     yield driver
+    # Screenshot
+    attach = driver.get_screenshot_as_png()
+    allure.attach(attach, name=f"Screenshot {datetime.today()}", attachment_type=allure.attachment_type.PNG)
     # Quitting the browser session after the test execution
     driver.quit()
